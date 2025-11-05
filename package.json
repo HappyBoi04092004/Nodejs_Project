@@ -1,0 +1,25 @@
+{
+  "name": "tu_hoc_nodejs",
+  "version": "1.0.0",
+  "description": "Hoc_ve_Nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HappyBoi04092004/Nodejs_Project.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "javascript"
+  ],
+  "author": "NguyenHanhPhuc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HappyBoi04092004/Nodejs_Project/issues"
+  },
+  "homepage": "https://github.com/HappyBoi04092004/Nodejs_Project#readme"
+}
