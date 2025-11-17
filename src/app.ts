@@ -6,8 +6,13 @@ const express = require("express");
 const app = express();
 
 const PORT =process.env.PORT || 3000;// Dieu kien hoac neu ko chay thi chay tren 3000
+
+//config view engine
+ app.set('view engine', 'ejs');
+app.set('views', './views');
+ 
 app.get('/', (req,res) => {
-    res.send ('App is running and update');
+    res.render ("home.ejs");
     }
 )
 app.get('/1', (req,res) => {
