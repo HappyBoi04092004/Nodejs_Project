@@ -1,6 +1,7 @@
 import { Express } from 'express';// su dung kieu Express
 import 'dotenv/config';//import dotenv tu dong load file .env
 //require('dotenv').config();
+import webrouters from './routers/app1';//import router tu file app1.ts
 
 const express = require("express");
 const app = express();
@@ -11,14 +12,8 @@ const PORT =process.env.PORT || 3000;// Dieu kien hoac neu ko chay thi chay tren
  app.set('view engine', 'ejs');
 app.set('views', './views');
  
-app.get('/', (req,res) => {
-    res.render ("home.ejs");
-    }
-)
-app.get('/1', (req,res) => {
-    res.send ('Hello world Hạnh ');
-    }
-)
+//router
+webrouters(app);
 
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);
