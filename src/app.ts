@@ -15,6 +15,9 @@ app.set('views', './views');
 //router
 webrouters(app);
 
+//config static files
+app.use(express.static('public'));
+
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);
     console.log(`Link vao thang web: http://localhost:${PORT}`);
