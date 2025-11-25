@@ -1,15 +1,12 @@
 import express,{Express} from "express";
+import { getCreateUserPage, getHomePage, postCreateUserPage } from "../controllers/user.controller";
+import { get } from "http";
 
 const router = express.Router();
 const webrouters = (app) =>{
-    router.get('/', (req,res) => {
-    res.render ("home.ejs");
-    }
-)
-    router.get('/1', (req,res) => {
-        res.send ('Hello world Hạnh ');
-    }
-)
+    router.get('/', getHomePage);
+    router.get('/create-user', getCreateUserPage);
+    router.post('/handle-create-user',postCreateUserPage);
 
     // router.listen(PORT, () => {
     //     console.log(`App is running on port : ${PORT} `);
