@@ -11,12 +11,17 @@ const PORT =process.env.PORT || 3000;// Dieu kien hoac neu ko chay thi chay tren
 //config view engine
  app.set('view engine', 'ejs');
 app.set('views', './views');
- 
+
+//config req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+ //config static files
+app.use(express.static('public'));
+
 //router
 webrouters(app);
 
-//config static files
-app.use(express.static('public'));
 
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);
