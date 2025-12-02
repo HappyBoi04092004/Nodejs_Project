@@ -5,7 +5,7 @@ const getHomePage = async(req:Request, res:Response) => {
     const users = await getAllUsers();
     console.log(">>> check users:", users);//test get all users
     return res.render("home.ejs",{
-        name :"users" 
+        user :users
     }
     )
 } 
