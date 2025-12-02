@@ -5,7 +5,7 @@ const handleCreateUser = (
         //insert user vao database
 
         //return kq
-        console.log(">>> Created user:", name, email);
+        console.log(">>> Created user:", name, email );
 
 }
 export { handleCreateUser };
