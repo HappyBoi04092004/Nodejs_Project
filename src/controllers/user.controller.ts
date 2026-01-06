@@ -3,9 +3,9 @@ import { getAllUsers, handleCreateUser } from "../services/user-service";
 
 const getHomePage = async(req:Request, res:Response) => {
     const users = await getAllUsers();
-    console.log(">>> check users:", users);//test get all users
+    //console.log(">>> check users:", users);//test get all users
     return res.render("home.ejs",{
-        user :users
+        users :users
     }
     )
 } 
