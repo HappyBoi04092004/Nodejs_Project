@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers, handleCreateUser } from "../services/user-service";
+import { getAllUsers, handleCreateUser } from "services/user-service";
 
 const getHomePage = async(req:Request, res:Response) => {
     const users = await getAllUsers();
@@ -12,10 +12,10 @@ const getHomePage = async(req:Request, res:Response) => {
 const getCreateUserPage = (req:Request, res:Response) => {
     return res.render("create-user.ejs")
 } 
-const postCreateUserPage = (req:Request, res:Response) => {
-    console.log(">>>check req body:", req.body);    
+const postCreateUser =async  (req:Request, res:Response) => {
+    const{name, email, local} = req.body;
     //handle create user
-    handleCreateUser(req.body.name, req.body.email);
+    await handleCreateUser(name, email,local);
     return res.redirect("/")
 } 
-export { getHomePage ,getCreateUserPage,postCreateUserPage};//export ham getHomePage de su dung o file khac va co the su fung nhieu file
+export { getHomePage ,getCreateUserPage,postCreateUser};//export ham getHomePage de su dung o file khac va co the su dung nhieu file

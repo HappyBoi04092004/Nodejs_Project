@@ -1,14 +1,24 @@
-import { get } from "http";
-import getConnection from "../config/database";
+import getConnection from "config/database";
 
-const handleCreateUser = (
+const handleCreateUser = async (
     name:string,
-    email:string) => {
+    email:string,
+    local:string
+    ) => {
 
         //insert user vao database
+        const connection = await getConnection();
+    //return kq
 
-        //return kq
-        console.log(">>> Created user:", name, email );
+        try {
+            const sql = 'INSERT INTO `users`(`name`, `email`, `local`) VALUES (?, ?, ?)';
+            const values = [name, email, local];
+            const [result, fields] = await connection.execute(sql, values);
+            return result;
+        } catch (err) {
+            console.log(err);
+            return [];
+}
 
 }
 
