@@ -51,7 +51,7 @@
               <td><%= user.local %></td>
               <td>
                 <div style="display: flex; gap: 10px">
-                  <form action="" method="post">
+                  <form action="/handle-view-user/<%= user.id %>" method="get">
                     <button class="btn btn-warning">View</button>
                   </form>
                   <form

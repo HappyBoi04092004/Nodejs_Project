@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers, handleCreateUser, handleDeleteUser } from "services/user-service";
+import { getAllUsers, handleCreateUser, handleDeleteUser, getUserById } from "services/user-service";
 
 const getHomePage = async(req:Request, res:Response) => {
     const users = await getAllUsers();
@@ -24,4 +24,12 @@ const postDeleteUser =async  (req:Request, res:Response) => {
     await handleDeleteUser(id);
     return res.redirect("/")
 }  
-export { getHomePage ,getCreateUserPage,postCreateUser,postDeleteUser};//export ham getHomePage de su dung o file khac va co the su dung nhieu file
+const getViewUser = async (req:Request, res:Response) => {
+    const { id } = req.params;
+    const user = await getUserById(id);
+    return res.render("view-user.ejs",{
+        id:id,
+        user:user
+    })
+}
+export { getHomePage ,getCreateUserPage,postCreateUser,postDeleteUser,getViewUser};//export ham getHomePage de su dung o file khac va co the su dung nhieu file
