@@ -33,7 +33,8 @@ label {
 <body>
     <h3>View A USER <%= user.name %> </h3>
     
-    <form action="/handle-create-user" method="post" class="form-example">
+    <form action="/handle-update-user" method="post" class="form-example">
+        <input style="display: none;" type="text" name="id" value="<%= user.id %>" />
   <div class="form-example">
     <label for="name">Enter your name: </label>
     <input value="<%= user.name %>" type="text" name="name" id="name" required />

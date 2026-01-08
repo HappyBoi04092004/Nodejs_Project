@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>View User</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -31,22 +31,22 @@ label {
 </style>
 </head>
 <body>
-    <a> CREATE A USER</a>
+    <h3>Create A USER </h3>
     
     <form action="/handle-create-user" method="post" class="form-example">
   <div class="form-example">
     <label for="name">Enter your name: </label>
-    <input type="text" name="name" id="name" required />
+    <input  type="text" name="name" id="name" required />
   </div>
   <div class="form-example">
     <label for="email">Enter your email: </label>
-    <input type="email" name="email" id="email" required />
+    <input  type="email" name="email" id="email" required />
   </div>
   <div class="form-example">
     <label for="local">Enter your local: </label>
     <input type="text" name="local" id="local" required />
   <div class="form-example">
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Create" />
   </div>
 </form>
 
