@@ -34,7 +34,7 @@ const getViewUser = async (req:Request, res:Response) => {
 }
 const postUpdateUser = async (req:Request, res:Response) => {
     const { id, name, email, local } = req.body;
-    await handleUpdateUser(id, name, email, local);
+    const postUpdateUser = await handleUpdateUser(id, name, email, local);
     return res.redirect("/");
 }
 export { getHomePage ,getCreateUserPage,postCreateUser,postDeleteUser,getViewUser,postUpdateUser};//export ham getHomePage de su dung o file khac va co the su dung nhieu file
