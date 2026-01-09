@@ -15,7 +15,7 @@ const getCreateUserPage = (req:Request, res:Response) => {
 const postCreateUser =async  (req:Request, res:Response) => {
     const{name, email, local} = req.body;
     //handle create user
-    await handleCreateUser(name, email,local);
+    const newUser = await handleCreateUser(name, email,local);
     return res.redirect("/")
 } 
 const postDeleteUser =async  (req:Request, res:Response) => {
