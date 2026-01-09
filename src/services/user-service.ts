@@ -65,19 +65,11 @@ const handleUpdateUser = async(id: string, name: string, email: string, local: s
 
 const getAllUsers = async() => {
     //select all users from database
-    const connection = await getConnection();
+    const users = await prisma.user.findMany();
+    return users;
 
     //return kq
    // A simple SELECT query
-    try {
-        const [results, fields] = await connection.query(
-            'SELECT * FROM `user` '
-    );
-
-    return results;
-    } catch (err) {
-        console.log(err);
-        return [];
-}
+   
 }
 export { handleCreateUser,getAllUsers,handleDeleteUser,getUserById,handleUpdateUser };

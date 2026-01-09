@@ -39,7 +39,7 @@
             <th>ID</th>
             <th>Email</th>
             <th>Name</th>
-            <th>Location</th>
+            <th>Address</th>
             <th>Action</th>
           </tr>
           <tbody>
@@ -48,7 +48,7 @@
               <td><%= user.id %></td>
               <td><%= user.email %></td>
               <td><%= user.name %></td>
-              <td><%= user.local %></td>
+              <td><%= user.address %></td>
               <td>
                 <div style="display: flex; gap: 10px">
                   <form action="/handle-view-user/<%= user.id %>" method="get">
