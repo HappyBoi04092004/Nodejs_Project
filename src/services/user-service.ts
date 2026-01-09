@@ -22,18 +22,10 @@ const handleCreateUser = async (
 }
 
 const handleDeleteUser = async(id: string) => {
-   try {
-    const connection = await getConnection();
-    const sql = 'DELETE FROM `user` WHERE `id` = ? ';
-    const values = [id];
-
-    const [result, fields] = await connection.execute(sql, values);
-
-    return result;
-    } catch (err) {
-    console.log(err);
-    return [];
-}
+   const deleteUser = await prisma.user.delete({
+    where: { id: +id }
+   });
+   return deleteUser;
 }
 const getUserById = async(id: string) => {
    const user = await prisma.user.findUnique({
