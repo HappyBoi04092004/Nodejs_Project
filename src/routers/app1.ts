@@ -1,5 +1,6 @@
 import express,{Express} from "express";
 import { getCreateUserPage, getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser} from "../controllers/user.controller";
+import { getDashboardPage } from "../controllers/admin/dashboard.controller";
 import { get } from "http";
 
 const router = express.Router();
@@ -10,6 +11,9 @@ const webrouters = (app) =>{
     router.post('/handle-delete-user/:id',postDeleteUser);
     router.get('/handle-view-user/:id',getViewUser);
     router.post('/handle-update-user',postUpdateUser);
+
+    //admin router
+    router.get('/admin', getDashboardPage);
 
 
     // router.listen(PORT, () => {
