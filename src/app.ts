@@ -2,6 +2,7 @@ import { Express } from 'express';// su dung kieu Express
 import 'dotenv/config';//import dotenv tu dong load file .env
 //require('dotenv').config();
 import webrouters from './routers/app1';//import router tu file app1.ts
+import initDatabase from "config/seed";//import ham khoi tao database tu file seed.ts
 
 const express = require("express");
 const app = express();
@@ -22,7 +23,8 @@ app.use(express.static('public'));
 //router
 webrouters(app);
 
-
+//seed database
+initDatabase();
 
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);

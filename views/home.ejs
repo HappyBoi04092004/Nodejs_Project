@@ -37,8 +37,8 @@
         <table class="table table-hover table-bordered" style="padding: 20px">
           <tr>
             <th>ID</th>
-            <th>Email</th>
-            <th>Name</th>
+            <th>Fullname</th>
+            <th>Username</th>
             <th>Address</th>
             <th>Action</th>
           </tr>
@@ -46,8 +46,8 @@
             <% users.forEach( function (user) { %>
             <tr>
               <td><%= user.id %></td>
-              <td><%= user.email %></td>
-              <td><%= user.name %></td>
+              <td><%= user.fullName %></td>
+              <td><%= user.username %></td>
               <td><%= user.address %></td>
               <td>
                 <div style="display: flex; gap: 10px">
