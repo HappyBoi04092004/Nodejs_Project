@@ -1,12 +1,11 @@
 import express,{Express} from "express";
-import { getCreateUserPage, getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser} from "../controllers/user.controller";
-import { getDashboardPage ,getAdminUserPage} from "../controllers/admin/dashboard.controller";
+import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser} from "../controllers/user.controller";
+import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage,getCreateUserPage} from "../controllers/admin/dashboard.controller";
 import { get } from "http";
 
 const router = express.Router();
 const webrouters = (app) =>{
     router.get('/', getHomePage);
-    router.get('/create-user', getCreateUserPage);
     router.post('/handle-create-user',postCreateUser);
     router.post('/handle-delete-user/:id',postDeleteUser);
     router.get('/handle-view-user/:id',getViewUser);
@@ -14,7 +13,11 @@ const webrouters = (app) =>{
 
     //admin router
     router.get('/admin', getDashboardPage);
+    router.get('/admin/create-user', getCreateUserPage);
     router.get('/admin/user', getAdminUserPage);
+    router.get('/admin/order', getAdminOrderPage);
+    router.get('/admin/product', getAdminProductPage);
+
 
 
     // router.listen(PORT, () => {
@@ -26,3 +29,4 @@ app.use('/', router);
 }
 export default webrouters;
 
+ 
