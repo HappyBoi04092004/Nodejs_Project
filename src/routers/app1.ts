@@ -1,6 +1,6 @@
 import express,{Express} from "express";
-import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser} from "../controllers/user.controller";
-import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage,getCreateUserPage} from "../controllers/admin/dashboard.controller";
+import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/user.controller";
+import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
 import { get } from "http";
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const webrouters = (app) =>{
 
     //admin router
     router.get('/admin', getDashboardPage);
-    router.get('/admin/create-user', getCreateUserPage);
+    router.get('/admin/user/create-user', getCreateUserPage);
     router.get('/admin/user', getAdminUserPage);
     router.get('/admin/order', getAdminOrderPage);
     router.get('/admin/product', getAdminProductPage);

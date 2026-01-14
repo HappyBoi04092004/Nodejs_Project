@@ -11,10 +11,11 @@ const getAdminUserPage = async(req:Request, res:Response) => {
         users:users
     });
 } 
+
 const getAdminOrderPage = async(req:Request, res:Response) => {
     return res.render("admin/order/show.ejs");
 }
 const getAdminProductPage = async(req:Request, res:Response) => {
     return res.render("admin/product/show.ejs");
 }
-export { getDashboardPage, getAdminUserPage, getAdminOrderPage, getAdminProductPage }
+export { getDashboardPage, getAdminUserPage, getAdminOrderPage, getAdminProductPage };
