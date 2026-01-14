@@ -15,6 +15,19 @@
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"
     ></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+         <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+                </script>
+
+
   </head>
 <%- include('../../layout/header'); -%>
   
@@ -23,7 +36,7 @@
       <div id="layoutSidenav_content">
        <h3>Create A USER </h3>
     
-    <form action="/handle-create-user" method="post" class="form-example">
+    <form action="/admin/handle-create-user" method="post" class="form-example">
   <div class="mb-3">
     <label for="name">Enter your name: </label>
     <input  type="text" name="name" id="name" required />
@@ -39,7 +52,7 @@
   </div>
   <div class="mb-3 col-6">
     <label  class="form-label">Role</label>
-    <select  class="form-select">
+    <select name="role" class="form-select">
       <% roles.forEach((role,index) => { %>
   <option value="<%-role.id %>">
     <%- role.name %>
@@ -50,9 +63,10 @@
   </div>
 
   <div class="mb-3">
-    <label for="formFile" class="form-label">Default file input example</label>
-    <input class="form-control" type="file" id="formFile">
+    <label for="formFile" class="form-label">Avatar</label>
+    <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
   </div>
+  <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
   <div class="form-example">
     <label for="local">Enter your local: </label>
     <input type="text" name="local" id="local" required />
