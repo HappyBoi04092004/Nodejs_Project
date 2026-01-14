@@ -36,7 +36,7 @@
       <div id="layoutSidenav_content">
        <h3>Create A USER </h3>
     
-    <form action="/admin/handle-create-user" method="post" class="form-example">
+    <form action="/admin/handle-create-user" method="post" enctype="multipart/form-data" class="form-example">
   <div class="mb-3">
     <label for="name">Enter your name: </label>
     <input  type="text" name="name" id="name" required />
@@ -64,7 +64,7 @@
 
   <div class="mb-3">
     <label for="formFile" class="form-label">Avatar</label>
-    <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
+    <input class="form-control" type="file" name="avatar" id="avatarFile" accept=".png, .jpg, .jpeg">
   </div>
   <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
   <div class="form-example">

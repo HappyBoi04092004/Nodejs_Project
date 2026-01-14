@@ -1,6 +1,7 @@
 import express,{Express} from "express";
 import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/user.controller";
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
+import fileUploadMiddleware from "src/middleware/multer";
 //import { get } from "http";
 
 const router = express.Router();
@@ -16,7 +17,10 @@ const webrouters = (app) =>{
     router.get('/admin/user', getAdminUserPage);
     router.get('/admin/order', getAdminOrderPage);
     router.get('/admin/product', getAdminProductPage);
-    router.post('/admin/handle-create-user',postCreateUser);
+    router.post('/admin/handle-create-user',fileUploadMiddleware("avatar"), postCreateUser);
+    // router.post('/admin/handle-create-user',upload.single('avatar'), (req, res) => {
+    //     return res.send('SUCCESS');
+    // });
 
 
 
