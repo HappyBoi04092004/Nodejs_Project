@@ -2,6 +2,7 @@ import { prisma } from "config/client";
 
 const initDatabase = async() => {
     const countUsers = await prisma.user.count();
+    const countRoles = await prisma.role.count();
     if(countUsers == 0){
         await prisma.user.createMany({
         data: [
@@ -21,7 +22,18 @@ const initDatabase = async() => {
             },
         ],
 })
-    }else{
+    }else if(countRoles == 0){
+        await prisma.role.createMany({
+        data: [
+            {
+                name: "Admin",            },
+            {
+                name: "User",
+            },
+        ],
+})
+    }
+    else{
         console.log("Database da duoc khoi tao, khong can khoi tao lai");
     }
 

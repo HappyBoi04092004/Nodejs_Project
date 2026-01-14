@@ -59,4 +59,13 @@ const getAllUsers = async() => {
    // A simple SELECT query
    
 }
-export { handleCreateUser,getAllUsers,handleDeleteUser,getUserById,handleUpdateUser };
+const getAllRoles = async() => {
+    //select all roles from database
+    const roles = await prisma.role.findMany();
+    return roles;
+
+    //return kq
+   // A simple SELECT query
+   
+} 
+export { handleCreateUser,getAllUsers,handleDeleteUser,getUserById,handleUpdateUser,getAllRoles };
