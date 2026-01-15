@@ -1,12 +1,14 @@
 import { prisma } from "config/client";
 import { ACCOUNT_TYPE } from "config/constant";
 //import getConnection from "config/database";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
+
 const saltRounds = 10;
 
 const hashPassword = async (plaintext: string) => {
   return await bcrypt.hash(plaintext, saltRounds);
 };
+
 
 const handleCreateUser = async (
     fullName:string,
@@ -16,20 +18,21 @@ const handleCreateUser = async (
     avatar:string | null,
     role: string
     ) => {
-      const defaultPassword = await hashPassword("123456");
+
+    const defaultPassword = await hashPassword("123456");
 
     //insert user vao database
     //return kq
     const newUser = await prisma.user.create({
         data: {
             fullName: fullName,
-            username: email || null, // Ensure username is set from email
+            username: email,
             address: local,
             password: defaultPassword,
-            accountType: "ACCOUNT_TYPE.SYSTEM",
-            avatar: avatar || null,
-            phone: phone || null,
-            roleId: +role // Default roleId for new users
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            avatar: avatar,
+            phone: phone,
+            roleId: +role
         }
     })
     return newUser;
@@ -48,15 +51,24 @@ const getUserById = async(id: string) => {
    });
    return user;
 }
-const handleUpdateUser = async(id: string, name: string, email: string, local: string) => {
+const handleUpdateUser = async(
+  id: string,
+  fullName: string,
+  email: string,
+  local: string,
+  phone: string,
+  role: string,
+  avatar?: string
+) => {
   const postUpdateUser = await prisma.user.update({
     where: { id: +id },
     data: {
-      fullName: name,
+      fullName: fullName,
       username: email,
       address: local,
-      password: "",
-      accountType: ""
+      phone: phone,
+      roleId: +role,
+      ...(avatar !== undefined && { avatar: avatar })
     }
   });
   return postUpdateUser;

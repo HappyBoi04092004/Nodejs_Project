@@ -18,9 +18,9 @@ const getCreateUserPage = async (req:Request, res:Response) => {
 const postCreateUser =async  (req:Request, res:Response) => {
     const{fullName, email, local, phone, role} = req.body;
     const file = req.file;
-    const avatar = file ? file.filename : " không có avatar";
+    const avatar = file ? file.filename : null;
     //handle create user
-    const newUser = await handleCreateUser(fullName, email, local, phone, avatar, role);
+    await handleCreateUser(fullName, email, local, phone, avatar, role);
     return res.redirect("/admin/user");
 } 
 const postDeleteUser =async  (req:Request, res:Response) => {
@@ -41,8 +41,10 @@ const getViewUser = async (req:Request, res:Response) => {
     })
 }
 const postUpdateUser = async (req:Request, res:Response) => {
-    const { id, fullName, username, local } = req.body;
-    const postUpdateUser = await handleUpdateUser(id, fullName, username, local,);
-    return res.redirect("/");
+    const{id,fullName, email, local, phone, role} = req.body;
+    const file = req.file;
+    const avatar = file ? file.filename : undefined;
+    const postUpdateUser = await handleUpdateUser(id, fullName, email, local, phone, role, avatar);
+    return res.redirect("/admin/user");
 }
 export { getHomePage ,getCreateUserPage,postCreateUser,postDeleteUser,getViewUser,postUpdateUser};//export ham getHomePage de su dung o file khac va co the su dung nhieu file
