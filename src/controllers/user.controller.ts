@@ -4,7 +4,7 @@ import { getAllUsers, handleCreateUser, handleDeleteUser, getUserById ,handleUpd
 const getHomePage = async(req:Request, res:Response) => {
     const users = await getAllUsers();
     //console.log(">>> check users:", users);//test get all users
-    return res.render("home.ejs",{
+    return res.render("show.ejs",{
         users :users
     }
     )
@@ -27,14 +27,17 @@ const postDeleteUser =async  (req:Request, res:Response) => {
     //console.log(">>> Check req.params:", req.params.id);
     const { id } = req.params;
     await handleDeleteUser(id);
-    return res.redirect("/")
+    return res.redirect("/admin/user")
 }  
 const getViewUser = async (req:Request, res:Response) => {
     const { id } = req.params;
     const user = await getUserById(id);
-    return res.render("view-user.ejs",{
+    const roles = await getAllRoles(); 
+
+    return res.render("admin/user/detail.ejs",{
         id:id,
-        user:user
+        user:user,
+        roles:roles
     })
 }
 const postUpdateUser = async (req:Request, res:Response) => {
