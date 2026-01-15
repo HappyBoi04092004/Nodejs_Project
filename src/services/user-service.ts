@@ -1,22 +1,27 @@
 import { prisma } from "config/client";
-import getConnection from "config/database";
+import { ACCOUNT_TYPE } from "config/constant";
+//import getConnection from "config/database";
 
 
 const handleCreateUser = async (
-    name:string,
+    fullName:string,
     email:string,
-    local:string
+    local:string,
+    phone:string,
+    avatar:string | null
     ) => {
 
     //insert user vao database
     //return kq
     const newUser = await prisma.user.create({
         data: {
-            fullName: name,
-            username: email,
+            fullName: fullName,
+            username: email || null, // Ensure username is set from email
             address: local,
-            password: "",
-            accountType: ""
+            password: "123456",
+            accountType: "ACCOUNT_TYPE.SYSTEM",
+            avatar: avatar || null,
+            phone: phone || null
         }
     })
     return newUser;

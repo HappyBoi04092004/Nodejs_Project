@@ -16,7 +16,7 @@ datasource db {
 //schema.prisma
 model User {
   id          Int     @id @default(autoincrement())
-  username    String  @db.VarChar(100)
+  username    String? @db.VarChar(100)
   password    String  @db.VarChar(255)
   fullName    String? @db.VarChar(255)
   address     String? @db.VarChar(255)
