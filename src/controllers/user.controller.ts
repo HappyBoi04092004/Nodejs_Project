@@ -20,7 +20,7 @@ const postCreateUser =async  (req:Request, res:Response) => {
     const file = req.file;
     const avatar = file ? file.filename : " không có avatar";
     //handle create user
-    const newUser = await handleCreateUser(fullName, email, local, phone, avatar);
+    const newUser = await handleCreateUser(fullName, email, local, phone, avatar, role);
     return res.redirect("/admin/user");
 } 
 const postDeleteUser =async  (req:Request, res:Response) => {
