@@ -1,7 +1,12 @@
 import { prisma } from "config/client";
 import { ACCOUNT_TYPE } from "config/constant";
 //import getConnection from "config/database";
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
+const hashPassword = async (plaintext: string) => {
+  return await bcrypt.hash(plaintext, saltRounds);
+};
 
 const handleCreateUser = async (
     fullName:string,
@@ -10,6 +15,7 @@ const handleCreateUser = async (
     phone:string,
     avatar:string | null
     ) => {
+      const defaultPassword = await hashPassword("123456");
 
     //insert user vao database
     //return kq
@@ -18,7 +24,7 @@ const handleCreateUser = async (
             fullName: fullName,
             username: email || null, // Ensure username is set from email
             address: local,
-            password: "123456",
+            password: defaultPassword,
             accountType: "ACCOUNT_TYPE.SYSTEM",
             avatar: avatar || null,
             phone: phone || null
@@ -73,4 +79,4 @@ const getAllRoles = async() => {
    // A simple SELECT query
    
 } 
-export { handleCreateUser,getAllUsers,handleDeleteUser,getUserById,handleUpdateUser,getAllRoles };
+export { handleCreateUser,getAllUsers,handleDeleteUser,getUserById,handleUpdateUser,getAllRoles,hashPassword };
