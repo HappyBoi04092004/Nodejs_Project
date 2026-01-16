@@ -3,7 +3,7 @@ import { getAllUsers, handleCreateUser, handleDeleteUser, getUserById ,handleUpd
 
 const getHomePage = async(req:Request, res:Response) => {
     //console.log(">>> check users:", users);//test get all users
-    return res.render("show.ejs",
+    return res.render("client/home/show.ejs",
     )
 } 
 const getCreateUserPage = async (req:Request, res:Response) => {

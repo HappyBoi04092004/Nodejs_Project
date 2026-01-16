@@ -28,7 +28,7 @@ initDatabase();
 
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);
-    console.log(`Link vao thang web: http://localhost:${PORT}/admin`);
+    console.log(`Link vao thang web: http://localhost:${PORT}`);
     console.log('ENV PORT:', process.env.PORT);
 })
 
