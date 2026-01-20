@@ -1,7 +1,7 @@
 import express,{Express} from "express";
-import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/user.controller";
+import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/admin/user.controller";
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
-import { getDetailProductPage } from "src/controllers/client/product.controller";
+import { getCreateProductPage, getDetailProductPage ,postAdminProductPage} from "controllers/admin/product.controller";
 import fileUploadMiddleware from "src/middleware/multer";
 //import { get } from "http";
 
@@ -14,8 +14,6 @@ const webrouters = (app) =>{
     router.get('/admin', getDashboardPage);
     router.get('/admin/create-user', getCreateUserPage);
     router.get('/admin/user', getAdminUserPage);
-    router.get('/admin/order', getAdminOrderPage);
-    router.get('/admin/product', getAdminProductPage);
     router.post('/admin/delete-user/:id',postDeleteUser);
     router.get('/admin/view-user/:id',getViewUser);
     router.post('/admin/update-user',fileUploadMiddleware("avatar"),postUpdateUser);
@@ -24,8 +22,13 @@ const webrouters = (app) =>{
     //     return res.send('SUCCESS');
     // });
 
+    router.get('/admin/product', getAdminProductPage);
+    router.get('/admin/create-product', getCreateProductPage);
+    router.post('/admin/create-product',fileUploadMiddleware("image","images/product "), postAdminProductPage);
 
 
+
+    router.get('/admin/order', getAdminOrderPage);
     // router.listen(PORT, () => {
     //     console.log(`App is running on port : ${PORT} `);
     //     console.log(`Link vao thang web: http://localhost:${PORT}`);
