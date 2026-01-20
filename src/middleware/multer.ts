@@ -29,4 +29,3 @@ const fileUploadMiddleware = (fieldName: string, dir: string = 'images') => {
 }
 
 export default fileUploadMiddleware;
-

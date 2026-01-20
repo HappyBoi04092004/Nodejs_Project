@@ -24,7 +24,7 @@ const webrouters = (app) =>{
 
     router.get('/admin/product', getAdminProductPage);
     router.get('/admin/create-product', getCreateProductPage);
-    router.post('/admin/create-product',fileUploadMiddleware("image","images/product "), postAdminProductPage);
+    router.post('/admin/handle-create-product',fileUploadMiddleware("image","images/product"), postAdminProductPage);
 
 
 
