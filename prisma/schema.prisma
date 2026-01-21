@@ -47,15 +47,15 @@ model Order {
 
 model Product {
   id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(255)
+  name       String @db.VarChar(255)
   price      Int
   image      String? @db.VarChar(255)
-  detailDesc String? @db.Text
-  shortDesc  String? @db.VarChar(255)
+  detailDesc String @db.Text
+  shortDesc  String @db.VarChar(255)
   quantity   Int
-  sold       Int     @default(0)
-  factory    String? @db.VarChar(100)
-  target     String? @db.VarChar(100)
+  sold       Int?    @default(0)
+  factory    String @db.VarChar(100)
+  target     String @db.VarChar(100)
 
   @@map("products")
 }

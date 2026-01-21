@@ -1,11 +1,28 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import errorMap from "zod/lib/locales/en";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } from "../../services/product-service";
 
 
 const getDetailProductPage = async (req:Request, res:Response) => {
-    //const { id } = req.params;
-    return res.render("admin/product/detail.ejs", );
+    try {
+        const { id } = req.params;
+        const product = await getProductById(+id);
+        
+        if (!product) {
+            return res.status(404).render("admin/product/detail.ejs", {
+                product: null,
+                errors: ["Sản phẩm không tìm thấy"]
+            });
+        }
+        
+        return res.render("admin/product/detail.ejs", { product: product, errors: [] });
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return res.status(500).render("admin/product/detail.ejs", {
+            product: null,
+            errors: ["Có lỗi xảy ra khi tải sản phẩm"]
+        });
+    }
 }
 
 const getCreateProductPage = async(req:Request, res:Response) => {
@@ -46,9 +63,19 @@ const postAdminCreateProductPage = async(req:Request, res:Response) => {
         }   
         
         const productData = validate.data;
+        const image = req?.file ? req.file.filename : null;
+        
         // Save to database
-        // TODO: Implement database logic here
-        console.log("Product data:", productData);
+        await createProduct({
+            name: productData.name,
+            price: productData.price,
+            detailDesc: productData.detailDesc,
+            shortDesc: productData.shortDesc,
+            quantity: productData.quantity,
+            factory: productData.factory,
+            target: productData.target,
+            image: image
+        });
         
         return res.redirect('/admin/product');
     } catch (error) {
@@ -64,6 +91,95 @@ const postAdminProductPage = async(req:Request, res:Response) => {
     const {name} = req.body;
     // Logic to handle product creation can be added here
     return res.redirect('/admin/product');
-}   
+}
 
-export { getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage };
+const getEditProductPage = async(req:Request, res:Response) => {
+    try {
+        const { id } = req.params;
+        const product = await getProductById(+id);
+        
+        if (!product) {
+            return res.status(404).render("admin/product/edit-product.ejs", {
+                product: null,
+                olddata: null,
+                errors: ["Sản phẩm không tìm thấy"]
+            });
+        }
+        
+        return res.render("admin/product/edit-product.ejs", { 
+            product: product,
+            olddata: product,
+            errors: [] 
+        });
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return res.status(500).render("admin/product/edit-product.ejs", {
+            product: null,
+            olddata: null,
+            errors: ["Có lỗi xảy ra khi tải sản phẩm"]
+        });
+    }
+}
+
+const postUpdateProductPage = async(req:Request, res:Response) => {
+    try {
+        const { id } = req.params;
+        const validate = ProductSchema.safeParse(req.body);
+        
+        if (!validate.success) {
+            const errorZod = validate.error.issues;
+            const errors = errorZod.map(item => `${item.message}`);
+            const product = await getProductById(+id);
+            
+            return res.render("admin/product/edit-product.ejs", { 
+                product: product,
+                olddata: req.body,
+                errors: errors
+            });
+        }   
+        
+        const productData = validate.data;
+        const image = req?.file ? req.file.filename : undefined;
+        
+        const updateData: any = {
+            name: productData.name,
+            price: productData.price,
+            detailDesc: productData.detailDesc,
+            shortDesc: productData.shortDesc,
+            quantity: productData.quantity,
+            factory: productData.factory,
+            target: productData.target
+        };
+        
+        if (image) {
+            updateData.image = image;
+        }
+        
+        await updateProduct(+id, updateData);
+        
+        return res.redirect('/admin/product');
+    } catch (error) {
+        console.error("Error updating product:", error);
+        const product = await getProductById(+(req.params.id));
+        
+        return res.render("admin/product/edit-product.ejs", { 
+            product: product,
+            olddata: req.body,
+            errors: ["Có lỗi xảy ra khi cập nhật sản phẩm"]
+        });
+    }
+}
+
+const postDeleteProductPage = async(req:Request, res:Response) => {
+    try {
+        const { id } = req.params;
+        await deleteProduct(+id);
+        
+        return res.redirect('/admin/product');
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        return res.status(500).json({ error: "Có lỗi xảy ra khi xóa sản phẩm" });
+    }
+}
+
+export { getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage };

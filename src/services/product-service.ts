@@ -1,0 +1,85 @@
+import { prisma } from "../config/client";
+
+interface CreateProductInput {
+    name: string;
+    price: number;
+    detailDesc: string;
+    shortDesc: string;
+    quantity: number;
+    factory: string;
+    target: string;
+    image?: string | null;
+}
+
+const createProduct = async (data: CreateProductInput) => {
+    try {
+        const newProduct = await prisma.product.create({
+            data: {
+                name: data.name,
+                price: data.price,
+                detailDesc: data.detailDesc,
+                shortDesc: data.shortDesc,
+                quantity: data.quantity,
+                factory: data.factory,
+                target: data.target,
+                image: data.image || null,
+                sold: 0
+            }
+        });
+        return newProduct;
+    } catch (error) {
+        console.error("Error creating product:", error);
+        throw error;
+    }
+};
+
+const getAllProducts = async () => {
+    try {
+        const products = await prisma.product.findMany({
+            orderBy: { id: 'desc' }
+        });
+        return products;
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        throw error;
+    }
+};
+
+const getProductById = async (id: number) => {
+    try {
+        const product = await prisma.product.findUnique({
+            where: { id: id }
+        });
+        return product;
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        throw error;
+    }
+};
+
+const updateProduct = async (id: number, data: Partial<CreateProductInput>) => {
+    try {
+        const updatedProduct = await prisma.product.update({
+            where: { id: id },
+            data: data
+        });
+        return updatedProduct;
+    } catch (error) {
+        console.error("Error updating product:", error);
+        throw error;
+    }
+};
+
+const deleteProduct = async (id: number) => {
+    try {
+        const deletedProduct = await prisma.product.delete({
+            where: { id: id }
+        });
+        return deletedProduct;
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        throw error;
+    }
+};
+
+export { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct };
