@@ -11,7 +11,7 @@ const getDetailProductPage = async (req:Request, res:Response) => {
 const getCreateProductPage = async(req:Request, res:Response) => {
     const errors = [];
 
-    const oldata= {
+    const olddata= {
         name: "",
         detailDesc: "",
         shortDesc: "",
@@ -21,7 +21,7 @@ const getCreateProductPage = async(req:Request, res:Response) => {
         target: "",
     };
 
-    return res.render("admin/product/create-product.ejs", { errors: errors, oldata: oldata });
+    return res.render("admin/product/create-product.ejs", { errors: errors, olddata: olddata });
 }
 
 const postAdminCreateProductPage = async(req:Request, res:Response) => {
@@ -30,18 +30,18 @@ const postAdminCreateProductPage = async(req:Request, res:Response) => {
         if (!validate.success) {
             const errorZod = validate.error.issues;
             const errors = errorZod.map(item => `${item.message}`);
-            const oldata= {
-            name: "",
-            detailDesc: "",
-            shortDesc: "",
-            price: "",
-            quantity: "",
-            factory: "",
-            target: "",
-        };
+            const olddata = {
+                name: req.body.name || "",
+                detailDesc: req.body.detailDesc || "",
+                shortDesc: req.body.shortDesc || "",
+                price: req.body.price || "",
+                quantity: req.body.quantity || "",
+                factory: req.body.factory || "",
+                target: req.body.target || "",
+            };
             return res.render("admin/product/create-product.ejs", { 
                 errors: errors,
-                oldata: oldata
+                olddata: olddata
             });
         }   
         
@@ -54,7 +54,8 @@ const postAdminCreateProductPage = async(req:Request, res:Response) => {
     } catch (error) {
         console.error("Error creating product:", error);
         return res.render("admin/product/create-product.ejs", { 
-            errors: ["Có lỗi xảy ra khi tạo sản phẩm"]
+            errors: ["Có lỗi xảy ra khi tạo sản phẩm"],
+            olddata: req.body
         });
     }
 }

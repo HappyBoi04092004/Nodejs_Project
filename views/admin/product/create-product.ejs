@@ -50,25 +50,25 @@
                         <!-- Name -->
                         <div class="mb-3">
                           <label class="form-label">Name</label>
-                          <input type="text" name="name" class="form-control" required />
+                          <input value="<%= olddata && olddata.name ? olddata.name : '' %>" type="text" name="name" class="form-control" required />
                         </div>
 
                         <!-- Price -->
                         <div class="mb-3">
                           <label class="form-label">Price</label>
-                          <input type="number" name="price" class="form-control" required />
+                          <input value="<%= olddata && olddata.price ? olddata.price : '' %>" type="number" name="price" class="form-control" required />
                         </div>
 
                         <!-- Quantity + Short Description -->
                         <div class="row">
                           <div class="mb-3 col-6">
                             <label class="form-label">Quantity</label>
-                            <input type="number" class="form-control" name="quantity" required />
+                            <input value="<%= olddata && olddata.quantity ? olddata.quantity : '' %>" type="number" class="form-control" name="quantity" required />
                           </div>
 
                           <div class="mb-3 col-6">
                             <label class="form-label">Short Description</label>
-                            <input type="text" class="form-control" name="shortDesc" required />
+                            <input value="<%= olddata && olddata.shortDesc ? olddata.shortDesc : '' %>" type="text" class="form-control" name="shortDesc" required />
                           </div>
                         </div>
 
@@ -76,7 +76,7 @@
                         <div class="row">
                           <div class="mb-3 col-12">
                             <label class="form-label">Details Description</label>
-                            <textarea name="detailDesc" class="form-control" rows="4" required></textarea>
+                            <textarea name="detailDesc" class="form-control" rows="4" required><%= olddata && olddata.detailDesc ? olddata.detailDesc : '' %></textarea>
                           </div>
                         </div>
 
@@ -84,24 +84,24 @@
                           <div class="mb-3 col-6">
                             <label class="form-label">Factory</label>
                             <select name="factory" class="form-select" required>
-                              <option value="APPLE">Apple (MacBook)</option>
-                              <option value="ASUS">Asus</option>
-                              <option value="LENOVO">Lenovo</option>
-                              <option value="DELL">Dell</option>
-                              <option value="LG">LG</option>
-                              <option value="ACER">Acer</option>
+                              <option value="">-- Chọn hãng --</option>
+                              <option value="APPLE" <%= olddata && olddata.factory === 'APPLE' ? 'selected' : '' %>>Apple (MacBook)</option>
+                              <option value="ASUS" <%= olddata && olddata.factory === 'ASUS' ? 'selected' : '' %>>Asus</option>
+                              <option value="LENOVO" <%= olddata && olddata.factory === 'LENOVO' ? 'selected' : '' %>>Lenovo</option>
+                              <option value="DELL" <%= olddata && olddata.factory === 'DELL' ? 'selected' : '' %>>Dell</option>
+                              <option value="LG" <%= olddata && olddata.factory === 'LG' ? 'selected' : '' %>>LG</option>
+                              <option value="ACER" <%= olddata && olddata.factory === 'ACER' ? 'selected' : '' %>>Acer</option>
                             </select>
                           </div>
                           <div class="mb-3 col-6">
                             <label class="form-label">Target</label>
                             <select name="target" class="form-select" required>
-                              <option value="GAMING">Gaming</option>
-                              <option value="SINHVIEN-VANPHONG">
-                                Sinh viên - Văn phòng
-                              </option>
-                              <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
-                              <option value="MONG-NHE">Mỏng nhẹ</option>
-                              <option value="DOANH-NHAN">Doanh nhân</option>
+                              <option value="">-- Chọn đối tượng --</option>
+                              <option value="GAMING" <%= olddata && olddata.target === 'GAMING' ? 'selected' : '' %>>Gaming</option>
+                              <option value="SINHVIEN-VANPHONG" <%= olddata && olddata.target === 'SINHVIEN-VANPHONG' ? 'selected' : '' %>>Sinh viên - Văn phòng</option>
+                              <option value="THIET-KE-DO-HOA" <%= olddata && olddata.target === 'THIET-KE-DO-HOA' ? 'selected' : '' %>>Thiết kế đồ họa</option>
+                              <option value="MONG-NHE" <%= olddata && olddata.target === 'MONG-NHE' ? 'selected' : '' %>>Mỏng nhẹ</option>
+                              <option value="DOANH-NHAN" <%= olddata && olddata.target === 'DOANH-NHAN' ? 'selected' : '' %>>Doanh nhân</option>
                             </select>
                           </div>
                         </div>
@@ -109,7 +109,7 @@
                         <!-- Avatar -->
                         <div class="mb-3">
                           <label class="form-label">Avatar</label>
-                          <input class="form-control" type="file" name="image" id="avatarFile"
+                          <input  class="form-control" type="file" name="image" id="avatarFile"
                             accept=".png,.jpg,.jpeg" />
                         </div>
 
