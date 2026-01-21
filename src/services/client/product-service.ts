@@ -1,4 +1,4 @@
-import { prisma } from "../config/client";
+import { prisma } from "config/client";
 
 interface CreateProductInput {
     name: string;

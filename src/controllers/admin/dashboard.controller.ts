@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getAllUsers } from "../../services/user-service";
-import { getAllProducts } from "../../services/product-service";
+import { getAllProducts } from "../../services/client/product-service";
 
 
 const getDashboardPage = async(req:Request, res:Response) => {

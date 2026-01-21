@@ -1,6 +1,6 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct ,} from "../../services/product-service";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct ,} from "../../services/client/product-service";
 
 import { prisma } from "config/client";
 
