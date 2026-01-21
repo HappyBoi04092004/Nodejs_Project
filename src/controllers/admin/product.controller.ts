@@ -1,6 +1,8 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } from "../../services/product-service";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct ,} from "../../services/product-service";
+
+import { prisma } from "config/client";
 
 
 const getDetailProductPage = async (req:Request, res:Response) => {
@@ -9,16 +11,16 @@ const getDetailProductPage = async (req:Request, res:Response) => {
         const product = await getProductById(+id);
         
         if (!product) {
-            return res.status(404).render("admin/product/detail.ejs", {
+            return res.status(404).render("client/product/detail.ejs", {
                 product: null,
                 errors: ["Sản phẩm không tìm thấy"]
             });
         }
-        
-        return res.render("admin/product/detail.ejs", { product: product, errors: [] });
+
+        return res.render("client/product/detail.ejs", { product: product, errors: [] });
     } catch (error) {
         console.error("Error fetching product:", error);
-        return res.status(500).render("admin/product/detail.ejs", {
+        return res.status(500).render("client/product/detail.ejs", {
             product: null,
             errors: ["Có lỗi xảy ra khi tải sản phẩm"]
         });
@@ -170,6 +172,7 @@ const postUpdateProductPage = async(req:Request, res:Response) => {
     }
 }
 
+
 const postDeleteProductPage = async(req:Request, res:Response) => {
     try {
         const { id } = req.params;
@@ -182,4 +185,4 @@ const postDeleteProductPage = async(req:Request, res:Response) => {
     }
 }
 
-export { getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage };
+export { getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById};
