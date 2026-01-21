@@ -1,172 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-    <meta name="author" content="Hỏi Dân IT" />
-    <title>Create Product - Hỏi Dân IT</title>
 
-    <link href="/admin/css/styles.css" rel="stylesheet" />
-    <script
-      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-      crossorigin="anonymous"
-    ></script>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+  <meta name="author" content="Hỏi Dân IT" />
+  <title>Create Product - Hỏi Dân IT</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href="/admin/css/styles.css" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-    <script>
-      $(document).ready(() => {
-        const avatarFile = $("#avatarFile");
-        avatarFile.change(function (e) {
-          const imgURL = URL.createObjectURL(e.target.files[0]);
-          $("#avatarPreview").attr("src", imgURL);
-          $("#avatarPreview").css({ display: "block" });
-        });
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(() => {
+      const avatarFile = $("#avatarFile");
+      avatarFile.change(function (e) {
+        const imgURL = URL.createObjectURL(e.target.files[0]);
+        $("#avatarPreview").attr("src", imgURL);
+        $("#avatarPreview").css({ display: "block" });
       });
-    </script>
-  </head>
+    });
+  </script>
+</head>
 
-  <body class="sb-nav-fixed">
-    <%- include('../layout/header'); -%>
+<body class="sb-nav-fixed">
+  <%- include('../layout/header'); -%>
 
     <div id="layoutSidenav">
       <%- include('../layout/sidenav'); -%>
 
-      <div id="layoutSidenav_content">
-        <main class="container-fluid px-4">
-          <h3 class="text-center my-4">Create A Product</h3>
+        <div id="layoutSidenav_content">
+          <main class="container-fluid px-4">
 
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-md-8 col-lg-6">
-                <form
-                  action="/admin/handle-create-product"
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-                  <!-- Name -->
-                  <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    <input
-                      type="text"
-                      name="Name"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-
-                  <!-- Price -->
-                  <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input
-                      type="number"
-                      name="price"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-
-                  <!-- Phone + Role -->
-                  <div class="row">
-                    <div class="mb-3 col-6">
-                      <label class="form-label">Quantity</label>
-                      <input type="text" class="form-control" name="quantity" />
-                    </div>
-
-                    <div class="mb-3 col-6">
-                      <label class="form-label">Short Description</label>
-                      <select
-                        name="shortDescription"
-                        class="form-control"
-                      ></select>
-                    </div>
-                  </div>
-
-                  <!-- Local -->
-                  <div class="row">
-                    <div class="mb-3 col-6">
-                      <label class="form-label">Details Description</label>
-                      <input
-                        type="text"
-                        name="detailsDescription"
-                        class="form-control"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="mb-3 col-6">
-                      <label class="form-label">Factory</label>
-                      <select name="factory" class="form-select">
-                        <option value="APPLE">Apple (MacBook)</option>
-                        <option value="ASUS">Asus</option>
-                        <option value="LENOVO">Lenovo</option>
-                        <option value="DELL">Dell</option>
-                        <option value="LG">LG</option>
-                        <option value="ACER">Acer</option>
-                      </select>
-                    </div>
-                    <div class="mb-3 col-6">
-                      <label class="form-label">Target</label>
-                      <select name="target" class="form-select">
-                        <option value="GAMING">Gaming</option>
-                        <option value="SINHVIEN-VANPHONG">
-                          Sinh viên - Văn phòng
-                        </option>
-                        <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
-                        <option value="MONG-NHE">Mỏng nhẹ</option>
-                        <option value="DOANH-NHAN">Doanh nhân</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <!-- Avatar -->
-                  <div class="mb-3">
-                    <label class="form-label">Avatar</label>
-                    <input
-                      class="form-control"
-                      type="file"
-                      name="image"
-                      id="avatarFile"
-                      accept=".png,.jpg,.jpeg"
-                    />
-                  </div>
-
-                  <!-- Preview -->
-                  <div class="text-center mb-3">
-                    <img
-                      style="max-height: 250px; display: none"
-                      alt="avatar preview"
-                      id="avatarPreview"
-                    />
-                  </div>
-
-                  <!-- Submit -->
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary px-4">
-                      Create
-                    </button>
-                  </div>
-                </form>
+            <% errors.forEach( function (error) { %>
+              <div class="alert alert-danger mb-3">
+                <%= error %>
               </div>
-            </div>
-          </div>
-        </main>
+              <% }) %>
 
-        <%- include('../layout/footer'); -%>
-      </div>
+                <h3 class="text-center my-4">Create A Product</h3>
+
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                      <form action="/admin/handle-create-product" method="post" enctype="multipart/form-data">
+                        <!-- Name -->
+                        <div class="mb-3">
+                          <label class="form-label">Name</label>
+                          <input type="text" name="name" class="form-control" required />
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                          <label class="form-label">Price</label>
+                          <input type="number" name="price" class="form-control" required />
+                        </div>
+
+                        <!-- Quantity + Short Description -->
+                        <div class="row">
+                          <div class="mb-3 col-6">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" name="quantity" required />
+                          </div>
+
+                          <div class="mb-3 col-6">
+                            <label class="form-label">Short Description</label>
+                            <input type="text" class="form-control" name="shortDesc" required />
+                          </div>
+                        </div>
+
+                        <!-- Detailed Description -->
+                        <div class="row">
+                          <div class="mb-3 col-12">
+                            <label class="form-label">Details Description</label>
+                            <textarea name="detailDesc" class="form-control" rows="4" required></textarea>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="mb-3 col-6">
+                            <label class="form-label">Factory</label>
+                            <select name="factory" class="form-select" required>
+                              <option value="APPLE">Apple (MacBook)</option>
+                              <option value="ASUS">Asus</option>
+                              <option value="LENOVO">Lenovo</option>
+                              <option value="DELL">Dell</option>
+                              <option value="LG">LG</option>
+                              <option value="ACER">Acer</option>
+                            </select>
+                          </div>
+                          <div class="mb-3 col-6">
+                            <label class="form-label">Target</label>
+                            <select name="target" class="form-select" required>
+                              <option value="GAMING">Gaming</option>
+                              <option value="SINHVIEN-VANPHONG">
+                                Sinh viên - Văn phòng
+                              </option>
+                              <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
+                              <option value="MONG-NHE">Mỏng nhẹ</option>
+                              <option value="DOANH-NHAN">Doanh nhân</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- Avatar -->
+                        <div class="mb-3">
+                          <label class="form-label">Avatar</label>
+                          <input class="form-control" type="file" name="image" id="avatarFile"
+                            accept=".png,.jpg,.jpeg" />
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="text-center mb-3">
+                          <img style="max-height: 250px; display: none" alt="avatar preview" id="avatarPreview" />
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary px-4">
+                            Create
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+          </main>
+
+          <%- include('../layout/footer'); -%>
+        </div>
     </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"></script>
     <script src="/admin/js/scripts.js"></script>
-  </body>
+</body>
+
 </html>

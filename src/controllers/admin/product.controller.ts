@@ -1,5 +1,6 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "src/validation/product.schema"; 
+import errorMap from "zod/lib/locales/en";
 
 
 const getDetailProductPage = async (req:Request, res:Response) => {
@@ -8,18 +9,33 @@ const getDetailProductPage = async (req:Request, res:Response) => {
 }
 
 const getCreateProductPage = async(req:Request, res:Response) => {
-    return res.render("admin/product/create-product.ejs");
+    const errors = [];
+    return res.render("admin/product/create-product.ejs", { errors: errors });
 }
 
 const postAdminCreateProductPage = async(req:Request, res:Response) => {
-    const {name} = req.body as TProductSchema;
     try {
-        const result = ProductSchema.parse(req.body);
-        console.log("Validated product data:", result);
+        const validate = ProductSchema.safeParse(req.body);
+        if (!validate.success) {
+            const errorZod = validate.error.issues;
+            const errors = errorZod.map(item => `${item.message}`);
+            return res.render("admin/product/create-product.ejs", { 
+                errors: errors
+            });
+        }   
+        
+        const productData = validate.data;
+        // Save to database
+        // TODO: Implement database logic here
+        console.log("Product data:", productData);
+        
+        return res.redirect('/admin/product');
     } catch (error) {
         console.error("Error creating product:", error);
+        return res.render("admin/product/create-product.ejs", { 
+            errors: ["Có lỗi xảy ra khi tạo sản phẩm"]
+        });
     }
-    return res.redirect('/admin/product');
 }
 
 const postAdminProductPage = async(req:Request, res:Response) => {
