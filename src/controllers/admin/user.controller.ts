@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers, handleCreateUser, handleDeleteUser, getUserById ,handleUpdateUser, getAllRoles} from "services/user-service";
+import { getAllUsers, handleCreateUser, handleDeleteUser, getUserById ,handleUpdateUser, getAllRoles} from "../../services/user-service";
 
 const getHomePage = async(req:Request, res:Response) => {
     //console.log(">>> check users:", users);//test get all users

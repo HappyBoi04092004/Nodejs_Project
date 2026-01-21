@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers } from "services/user-service";
+import { getAllUsers } from "../../services/user-service";
 
 
 const getDashboardPage = async(req:Request, res:Response) => {

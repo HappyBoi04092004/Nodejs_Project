@@ -1,5 +1,5 @@
 import { Request, Response} from "express";
-import { ProductSchema, TProductSchema } from "src/validation/product.schema"; 
+import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
 import errorMap from "zod/lib/locales/en";
 
 
@@ -10,7 +10,18 @@ const getDetailProductPage = async (req:Request, res:Response) => {
 
 const getCreateProductPage = async(req:Request, res:Response) => {
     const errors = [];
-    return res.render("admin/product/create-product.ejs", { errors: errors });
+
+    const oldata= {
+        name: "",
+        detailDesc: "",
+        shortDesc: "",
+        price: "",
+        quantity: "",
+        factory: "",
+        target: "",
+    };
+
+    return res.render("admin/product/create-product.ejs", { errors: errors, oldata: oldata });
 }
 
 const postAdminCreateProductPage = async(req:Request, res:Response) => {
@@ -19,8 +30,18 @@ const postAdminCreateProductPage = async(req:Request, res:Response) => {
         if (!validate.success) {
             const errorZod = validate.error.issues;
             const errors = errorZod.map(item => `${item.message}`);
+            const oldata= {
+            name: "",
+            detailDesc: "",
+            shortDesc: "",
+            price: "",
+            quantity: "",
+            factory: "",
+            target: "",
+        };
             return res.render("admin/product/create-product.ejs", { 
-                errors: errors
+                errors: errors,
+                oldata: oldata
             });
         }   
         

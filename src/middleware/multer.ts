@@ -3,11 +3,10 @@ import path from 'path'
 import { v4 } from 'uuid';
 
 const fileUploadMiddleware = (fieldName: string, dir: string = 'images') => {
-    return multer({
+    const upload = multer({
         storage: multer.diskStorage({
             destination: 'public/' + dir,
             filename: (req, file, cb) => {
-                
                 cb(null, v4() + path.extname(file.originalname));
             }
         }),
@@ -26,6 +25,19 @@ const fileUploadMiddleware = (fieldName: string, dir: string = 'images') => {
             }
         }
     }).single(fieldName);
+
+    return (req: any, res: any, next: any) => {
+        upload(req, res, (err: any) => {
+            if (err instanceof multer.MulterError) {
+                console.error('Multer error:', err);
+                return next();
+            } else if (err) {
+                console.error('Upload error:', err);
+                return next();
+            }
+            next();
+        });
+    };
 }
 
 export default fileUploadMiddleware;

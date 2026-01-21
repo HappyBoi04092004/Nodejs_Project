@@ -1,8 +1,8 @@
 import express,{Express} from "express";
 import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/admin/user.controller";
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
-import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage} from "controllers/admin/product.controller";
-import fileUploadMiddleware from "src/middleware/multer";
+import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage} from "../controllers/admin/product.controller";
+import fileUploadMiddleware from "../middleware/multer";
 //import { get } from "http";
 
 const router = express.Router();

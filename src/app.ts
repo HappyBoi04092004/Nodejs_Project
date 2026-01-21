@@ -2,7 +2,7 @@ import { Express } from 'express';// su dung kieu Express
 import 'dotenv/config';//import dotenv tu dong load file .env
 //require('dotenv').config();
 import webrouters from './routers/app1';//import router tu file app1.ts
-import initDatabase from "config/seed";//import ham khoi tao database tu file seed.ts
+import initDatabase from "./config/seed";//import ham khoi tao database tu file seed.ts
 
 const express = require("express");
 const app = express();
