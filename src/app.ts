@@ -26,6 +26,11 @@ webrouters(app);
 //seed database
 initDatabase();
 
+//handle 404 - Not Found
+// app.use((req, res) => {
+//     res.status(404).send("404 - Not Found");
+// });
+
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);
     console.log(`Link vao thang web: http://localhost:${PORT}`);
