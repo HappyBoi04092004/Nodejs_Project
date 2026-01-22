@@ -30,24 +30,46 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                    <form>
+                    <% if (typeof error !== 'undefined' && error) { %>
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    <% } %>
+                    <% if (typeof errors !== 'undefined' && Array.isArray(errors)) { %>
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0">
+                          <% errors.forEach(err => { %>
+                            <li><%= err.message %></li>
+                          <% }); %>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    <% } %>
+                    <form method="POST" action="/client/register">
                       <div class="form-floating mb-3">
                         <input
                           class="form-control"
                           id="inputFullName"
+                          name="fullName"
                           type="text"
                           placeholder="Enter your full name"
+                          value="<%= typeof formData !== 'undefined' && formData.fullName ? formData.fullName : '' %>"
+                          required
                         />
                         <label for="inputFullName">Full name</label>
                       </div>
                       <div class="form-floating mb-3">
                         <input
                           class="form-control"
-                          id="inputEmail"
-                          type="email"
-                          placeholder="name@example.com"
+                          id="inputUsername"
+                          name="username"
+                          type="text"
+                          placeholder="Enter username"
+                          value="<%= typeof formData !== 'undefined' && formData.username ? formData.username : '' %>"
+                          required
                         />
-                        <label for="inputEmail">Email address</label>
+                        <label for="inputUsername">Username</label>
                       </div>
                       <div class="row mb-3">
                         <div class="col-md-6">
@@ -55,8 +77,10 @@
                             <input
                               class="form-control"
                               id="inputPassword"
+                              name="password"
                               type="password"
                               placeholder="Create a password"
+                              required
                             />
                             <label for="inputPassword">Password</label>
                           </div>
@@ -66,8 +90,10 @@
                             <input
                               class="form-control"
                               id="inputPasswordConfirm"
+                              name="confirmPassword"
                               type="password"
                               placeholder="Confirm password"
+                              required
                             />
                             <label for="inputPasswordConfirm"
                               >Confirm Password</label
@@ -77,11 +103,7 @@
                       </div>
                       <div class="mt-4 mb-0">
                         <div class="d-grid">
-                          <a
-                            class="btn btn-primary btn-block"
-                            href="/client/login"
-                            >Create Account</a
-                          >
+                          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
                         </div>
                       </div>
                     </form>
