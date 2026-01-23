@@ -1,3 +1,4 @@
+import { comparePassword } from "services/user-service";
 import { prisma } from "../../config/client";
 import bcrypt from "bcrypt";
 
@@ -53,5 +54,6 @@ const handleRegister = async (
     };
   }
 };
+
 
 export { handleRegister };

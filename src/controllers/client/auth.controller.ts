@@ -7,7 +7,8 @@ const getRegisterPage = async(req:Request, res:Response) => {
 }
 
 const getLoginPage = async(req:Request, res:Response) => {
-    return res.render("client/auth/login.ejs");
+    const message = req.query.message || null;
+    return res.render("client/auth/login.ejs", { message });
 }
 
 const postRegister = async(req:Request, res:Response) => {

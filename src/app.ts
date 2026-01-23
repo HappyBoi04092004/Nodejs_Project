@@ -3,6 +3,9 @@ import 'dotenv/config';//import dotenv tu dong load file .env
 //require('dotenv').config();
 import webrouters from './routers/app1';//import router tu file app1.ts
 import initDatabase from "./config/seed";//import ham khoi tao database tu file seed.ts
+import passport from 'passport';
+import configPassportLocal from 'src/middleware/passport.local';
+import session from 'express-session';
 
 const express = require("express");
 const app = express();
@@ -19,6 +22,17 @@ app.use(express.urlencoded({ extended: true }));
 
  //config static files
 app.use(express.static('public'));
+
+//config session
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+//config passport
+app.use(passport.initialize());
+app.use(passport.authenticate('session'));
+configPassportLocal();
 
 //router
 webrouters(app);

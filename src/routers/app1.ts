@@ -4,11 +4,14 @@ import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPag
 import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage} from "../controllers/admin/product.controller";
 import fileUploadMiddleware from "../middleware/multer";
 import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
+import passport from "passport";
 //import { get } from "http";
 
 const router = express.Router();
 const webrouters = (app) =>{
     router.get('/', getHomePage);
+    router.get('/client/index.html', getHomePage);
+    router.get('/client', getHomePage);
     router.get('/product/:id', getDetailProductPage);
 
     //admin router
@@ -32,6 +35,11 @@ const webrouters = (app) =>{
     router.post('/admin/delete-product/:id', postDeleteProductPage);
 
     router.get('/client/login', getLoginPage);
+    router.post('/client/login', passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/client/login',
+        failureMessage: true
+    }));
     router.get('/client/register', getRegisterPage);
     router.post('/client/register', postRegister);
 
