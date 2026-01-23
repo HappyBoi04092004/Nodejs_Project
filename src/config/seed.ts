@@ -24,13 +24,17 @@ const initDatabase = async() => {
             where: { name: "Admin" }
         });
         if (adminrole) {
+            const johndoePassword = await hashPassword("johndoe");
+            const janesmithPassword = await hashPassword("janesmith");
+            const adminPassword = await hashPassword("admin");
+            
             await prisma.user.createMany({
         data: [
             {
                 fullName: "John Doe",
                 username: "johndoe@example.com",
                 address: "123 Main St, Cityville",
-                password: defaultPassword,
+                password: johndoePassword,
                 accountType: ACCOUNT_TYPE.SYSTEM,
                 roleId : adminrole.id
             },
@@ -38,7 +42,7 @@ const initDatabase = async() => {
                 fullName: "Jane Smith",
                 username: "janesmith@example.com",
                 address: "456 Oak Ave, Townsville",
-                password: defaultPassword,
+                password: janesmithPassword,
                 accountType: ACCOUNT_TYPE.SYSTEM,
                 roleId : adminrole.id
             },
@@ -46,7 +50,7 @@ const initDatabase = async() => {
                 fullName: "Admin",
                 username: "admin@example.com",
                 address: "456 Main St, Cityville",
-                password: defaultPassword,
+                password: adminPassword,
                 accountType: ACCOUNT_TYPE.SYSTEM,
                 roleId : adminrole.id
             },
