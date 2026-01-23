@@ -7,7 +7,14 @@ const getRegisterPage = async(req:Request, res:Response) => {
 }
 
 const getLoginPage = async(req:Request, res:Response) => {
-    const message = req.query.message || null;
+    let message = null;
+    
+    // Get message from session (from passport)
+    if ((req.session as any).messages && (req.session as any).messages.length > 0) {
+        message = (req.session as any).messages[0];
+        (req.session as any).messages = []; // Clear messages
+    }
+    
     return res.render("client/auth/login.ejs", { message });
 }
 
