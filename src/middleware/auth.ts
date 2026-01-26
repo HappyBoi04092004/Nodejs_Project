@@ -13,7 +13,7 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   
-    const user = req.user as any;
+    const user = req.user ;
     if (user?.role?.name === 'Admin') {
         next();
         return;

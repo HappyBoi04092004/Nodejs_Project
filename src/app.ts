@@ -1,3 +1,4 @@
+/// <reference path="./types/index.d.ts" />
 import { Express } from 'express';// su dung kieu Express
 import 'dotenv/config';//import dotenv tu dong load file .env
 //require('dotenv').config();
