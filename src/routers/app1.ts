@@ -36,7 +36,7 @@ const webrouters = (app) =>{
     router.post('/admin/delete-product/:id', postDeleteProductPage);
 
     router.get("/success-redirect", getSuccessRedirectPage);
-    router.get('/client/login',isLogin ,getLoginPage);
+    router.get('/client/login' ,getLoginPage);
     router.post('/client/login', passport.authenticate('local', {
         successRedirect: '/success-redirect',
         failureRedirect: '/client/login',
@@ -52,7 +52,7 @@ const webrouters = (app) =>{
     //     console.log(`Link vao thang web: http://localhost:${PORT}`);
     //     console.log('ENV PORT:', process.env.PORT);
 
-app.use('/', router);
+app.use('/',isAdmin, router);
 }
 export default webrouters;
 

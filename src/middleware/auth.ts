@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { UserRole } from 'src/types';
 
 const isLogin = (req: Request, res: Response, next: NextFunction) => {
   
@@ -13,11 +14,18 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   
-    const user = req.user ;
-    if (user?.role?.name === 'Admin') {
+    if(req.path.startsWith('/admin')) {
+        const user = req.user;
+        if (user?.role?.name === 'Admin') {
+            next();
+            return;
+        } else {
+            return res.status(403).render("status/403.ejs");
+        }
+    } 
+        //client route
         next();
-        return;
-    } else res.redirect("/")
-}
+    }
+
 
 export { isLogin, isAdmin };

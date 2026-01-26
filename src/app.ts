@@ -61,9 +61,10 @@ webrouters(app);
 initDatabase();
 
 //handle 404 - Not Found
-// app.use((req, res) => {
-//     res.status(404).send("404 - Not Found");
-// });
+app.use((req, res) => {
+    //res.status(404).send("404 - Not Found");
+    res.status(404).render("status/404.ejs");
+});
 
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT} `);

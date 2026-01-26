@@ -11,19 +11,13 @@ const getDetailProductPage = async (req:Request, res:Response) => {
         const product = await getProductById(+id);
         
         if (!product) {
-            return res.status(404).render("client/product/detail.ejs", {
-                product: null,
-                errors: ["Sản phẩm không tìm thấy"]
-            });
+            return res.status(404).render("status/404.ejs");
         }
 
         return res.render("client/product/detail.ejs", { product: product, errors: [] });
     } catch (error) {
         console.error("Error fetching product:", error);
-        return res.status(500).render("client/product/detail.ejs", {
-            product: null,
-            errors: ["Có lỗi xảy ra khi tải sản phẩm"]
-        });
+        return res.status(500).render("status/500.ejs");
     }
 }
 
