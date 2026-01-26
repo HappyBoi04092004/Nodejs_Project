@@ -70,4 +70,14 @@ const getSuccessRedirectPage = async(req:Request, res:Response) => {
         return res.redirect('/');
     }
 }
-export { getRegisterPage, getLoginPage, postRegister, getSuccessRedirectPage};
+
+const postLogout = async(req:Request, res:Response, next:Function) => {
+    req.logout(function(err) {
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/');
+    });
+}
+
+export { getRegisterPage, getLoginPage, postRegister, getSuccessRedirectPage, postLogout};

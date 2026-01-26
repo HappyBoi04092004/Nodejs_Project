@@ -3,7 +3,7 @@ import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
 import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage} from "../controllers/admin/product.controller";
 import fileUploadMiddleware from "../middleware/multer";
-import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postRegister } from "controllers/client/auth.controller";
+import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
 import { isAdmin, isLogin } from "src/middleware/auth";
 //import { get } from "http";
@@ -42,6 +42,7 @@ const webrouters = (app) =>{
         failureRedirect: '/client/login',
         failureMessage: true
     }));
+    router.post('/client/logout', postLogout);
     router.get('/client/register', getRegisterPage);
     router.post('/client/register', postRegister);
 
