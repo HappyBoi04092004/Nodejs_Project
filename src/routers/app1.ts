@@ -3,8 +3,9 @@ import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
 import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage} from "../controllers/admin/product.controller";
 import fileUploadMiddleware from "../middleware/multer";
-import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
+import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
+import { isLogin } from "src/middleware/auth";
 //import { get } from "http";
 
 const router = express.Router();
@@ -34,9 +35,10 @@ const webrouters = (app) =>{
     router.post('/admin/update-product/:id', fileUploadMiddleware("image","images/product"), postUpdateProductPage);
     router.post('/admin/delete-product/:id', postDeleteProductPage);
 
-    router.get('/client/login', getLoginPage);
+    router.get("/success-redirect", getSuccessRedirectPage);
+    router.get('/client/login',isLogin ,getLoginPage);
     router.post('/client/login', passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/success-redirect',
         failureRedirect: '/client/login',
         failureMessage: true
     }));

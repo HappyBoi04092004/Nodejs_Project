@@ -55,5 +55,13 @@ const handleRegister = async (
   }
 };
 
+const getUserWithRoleById = async(id: string) => {
+   const user = await prisma.user.findUnique({
+    where: { id: +id },
+    include: { role: true },
+    omit: { password: true },
+   });
+   return user;
+}
 
-export { handleRegister };
+export { handleRegister, getUserWithRoleById };
