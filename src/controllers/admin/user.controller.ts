@@ -4,6 +4,9 @@ import { getAllProducts } from "services/client/product-service";
 
 const getHomePage = async(req:Request, res:Response) => {
     const products = await getAllProducts();
+    const user =req.user;
+    console.log(">>> check current user:", user);
+    //const users = await getAllUsers();
     //console.log(">>> check users:", users);//test get all users
     return res.render("client/home/show.ejs", {
         products: products
