@@ -10,4 +10,12 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export { isLogin };
+const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  
+    const user = req.user as any;
+    if (user?.role?.name === 'Admin') {
+        res.redirect('/admin');
+    } else res.redirect("/")
+}
+
+export { isLogin, isAdmin };
