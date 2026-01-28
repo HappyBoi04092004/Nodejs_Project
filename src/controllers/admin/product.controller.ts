@@ -1,6 +1,6 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct ,} from "../../services/client/product-service";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart ,} from "../../services/client/product-service";
 
 import { prisma } from "config/client";
 
@@ -179,4 +179,16 @@ const postDeleteProductPage = async(req:Request, res:Response) => {
     }
 }
 
-export { getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById};
+const postAddProductToCart = async(req:Request, res : Response) =>{
+    const {id} = req.params;
+    const user = req.user ;
+    if(user){
+        await addProductToCart(1,+id, user)
+    }else{
+        return res.redirect('/client/login');
+    }
+
+    return res.redirect('/');
+}
+
+export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById};

@@ -1,7 +1,7 @@
 import express,{Express} from "express";
 import {  getHomePage, postCreateUser ,postDeleteUser,getViewUser,postUpdateUser,getCreateUserPage} from "../controllers/admin/user.controller";
 import { getDashboardPage ,getAdminUserPage,getAdminOrderPage,getAdminProductPage} from "../controllers/admin/dashboard.controller";
-import { getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage} from "../controllers/admin/product.controller";
+import {getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage,postAddProductToCart} from "../controllers/admin/product.controller";
 import fileUploadMiddleware from "../middleware/multer";
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import passport from "passport";
@@ -45,6 +45,7 @@ const webrouters = (app) =>{
     router.post('/client/logout', postLogout);
     router.get('/client/register', getRegisterPage);
     router.post('/client/register', postRegister);
+    router.post('/add-product-to-cart/:id', postAddProductToCart);
 
     router.get('/admin/order', getAdminOrderPage);
     // router.listen(PORT, () => {

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserRole } from 'src/types';
-
+import {UserPrisma} from 'src/types';
 const isLogin = (req: Request, res: Response, next: NextFunction) => {
   
     const isAuthenticated = req.isAuthenticated();

@@ -1,7 +1,7 @@
 import { User,Role } from "prisma/client";
 
 
-type UserRole = User & Role;//union
+type UserPrisma = User & Role;//union
 
 declare global {
   namespace Express {
