@@ -200,5 +200,18 @@ const getCartPage = async(req:Request, res:Response) => {
     const totalPrice = cartDetails?.map(item => +item.product.price * +item.quantity).reduce((a, b) => a + b, 0) || 0;
     return res.render("client/product/cart.ejs", { cartDetails, totalPrice });
 }
+const postDeleteProductInCart = async(req:Request, res:Response) => {
+    const {id} = req.params;
+    const user = req.user;
+    if(!user){
+        return res.redirect('/client/login');
+    }
+    await prisma.cartDetail.deleteMany({
+        where:{
+            id: +id
+        }
+    })
+    return res.redirect('/cart');
+}
 
-export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage};
+export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage, postDeleteProductInCart};
