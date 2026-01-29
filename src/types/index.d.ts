@@ -6,6 +6,7 @@ type UserPrisma = User & Role;//union
 declare global {
   namespace Express {
     interface User extends User {
+      id?: number;
       role?: Role;
     }
   }

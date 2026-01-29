@@ -1,6 +1,6 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart ,} from "../../services/client/product-service";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart ,} from "../../services/client/product-service";
 
 import { prisma } from "config/client";
 
@@ -196,17 +196,9 @@ const getCartPage = async(req:Request, res:Response) => {
     if(!user){
         return res.redirect('/client/login');
     }
-    const cart =  await prisma.cart.findUnique({
-        where:{userId : (user as any).id},
-        include:{
-            cartDetails:{
-                include:{
-                    product:true
-                }
-            }
-        }
-    });
-    return res.render('client/product/cart.ejs',{cart: cart});
+    const cartDetails =  await getProductInCart(+user.id);
+    const totalPrice = cartDetails?.map(item => +item.product.price * +item.quantity).reduce((a, b) => a + b, 0) || 0;
+    return res.render("client/product/cart.ejs", { cartDetails, totalPrice });
 }
 
 export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage};

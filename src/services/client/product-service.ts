@@ -154,4 +154,19 @@ const deleteProduct = async (id: number) => {
     }
 };
 
-export { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart };
+const getProductInCart = async (userId: number) => {
+        const cart = await prisma.cart.findUnique({
+            where: { userId: userId },
+        });
+        if (cart) {
+            const currentCartDetails = await prisma.cartDetail.findMany({
+                where: { cartId: cart.id },
+                include: { product: true },
+            });
+            return currentCartDetails;
+        }
+        return [];
+    
+    }
+
+export { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart };
