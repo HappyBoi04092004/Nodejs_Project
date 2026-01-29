@@ -147,5 +147,92 @@
         button.parent().parent().find('input').val(newVal);
     });
 
+    // Add to cart functionality
+    $('.add-to-cart-btn').on('click', function(e) {
+        e.preventDefault();
+        const productId = $(this).data('product-id');
+        
+        $.ajax({
+            url: `/add-product-to-cart/${productId}`,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.success) {
+                    // Update cart count
+                    $('.cart-count').text(response.cartSum);
+                    
+                    // Show success message
+                    alert(response.message);
+                } else {
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            },
+            error: function(xhr) {
+                const response = xhr.responseJSON;
+                if (response && response.redirect) {
+                    window.location.href = response.redirect;
+                } else {
+                    alert('Lỗi khi thêm sản phẩm vào giỏ hàng');
+                }
+            }
+        });
+    });
+
+    // Cart page quantity update
+    $(document).on('click', '.update-quantity', function() {
+        const action = $(this).data('action');
+        const cartDetailId = $(this).data('cart-detail-id');
+        const $row = $(this).closest('tr');
+        const $qtyInput = $row.find('.qty-input');
+        let currentQty = parseInt($qtyInput.val());
+        
+        if (action === 'plus') {
+            currentQty++;
+        } else if (action === 'minus' && currentQty > 1) {
+            currentQty--;
+        } else if (action === 'minus' && currentQty === 1) {
+            return; // Don't allow quantity to go below 1
+        }
+        
+        $qtyInput.val(currentQty);
+        
+        // Update total price
+        const price = parseInt($row.find('td').eq(2).text());
+        const totalPrice = currentQty * price;
+        $row.find('.total-price').text(totalPrice + ' $');
+        
+        // Update cart totals
+        updateCartTotals();
+    });
+
+    // Remove item from cart
+    $(document).on('click', '.remove-item', function() {
+        const productId = $(this).data('product-id');
+        if (confirm('Bạn chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+            $(this).closest('tr').fadeOut(300, function() {
+                $(this).remove();
+                updateCartTotals();
+            });
+        }
+    });
+
+    // Update cart totals
+    function updateCartTotals() {
+        let subtotal = 0;
+        $('.total-price').each(function() {
+            subtotal += parseInt($(this).text());
+        });
+        
+        const shipping = 3;
+        const total = subtotal + shipping;
+        
+        $('.subtotal').text('$' + subtotal);
+        $('.grand-total').text('$' + total);
+    }
+
 })(jQuery);
 

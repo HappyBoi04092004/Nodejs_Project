@@ -181,14 +181,76 @@ const postDeleteProductPage = async(req:Request, res:Response) => {
 
 const postAddProductToCart = async(req:Request, res : Response) =>{
     const {id} = req.params;
-    const user = req.user ;
+    const user = req.user as any;
     if(user){
-        await addProductToCart(1,+id, user)
-    }else{
-        return res.redirect('/client/login');
+        try {
+            await addProductToCart(1, +id, user);
+            
+            // Get updated cart
+            const cart = await prisma.cart.findUnique({
+                where: { userId: user.id }
+            });
+            
+            return res.json({ 
+                success: true, 
+                message: "Thêm sản phẩm vào giỏ hàng thành công",
+                cartSum: cart?.sum || 0
+            });
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            return res.status(500).json({ 
+                success: false, 
+                message: "Lỗi khi thêm sản phẩm vào giỏ hàng" 
+            });
+        }
+    } else {
+        return res.status(401).json({ 
+            success: false, 
+            message: "Vui lòng đăng nhập",
+            redirect: "/client/login"
+        });
     }
-
-    return res.redirect('/');
 }
 
-export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById};
+const getCartPage = async(req:Request, res:Response) => {
+    const user = req.user as any;
+    if(!user){
+        return res.redirect('/client/login');
+    }
+    
+    // Get cart with details
+    const cart = await prisma.cart.findUnique({
+        where: { userId: user.id },
+        include: {
+            cartDetails: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    });
+
+    const cartData = cart ? {
+        id: cart.id,
+        sum: cart.sum,
+        cartDetails: cart.cartDetails.map(detail => ({
+            id: detail.id,
+            quantity: detail.quantity,
+            price: detail.price,
+            cartId: detail.cartId,
+            productId: detail.productId,
+            product: {
+                id: detail.product.id,
+                name: detail.product.name,
+                price: detail.product.price,
+                image: detail.product.image,
+                detailDesc: detail.product.detailDesc,
+                shortDesc: detail.product.shortDesc
+            }
+        }))
+    } : null;
+
+    return res.render("client/product/cart.ejs", { cart: cartData, user: user });
+}
+
+export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage};

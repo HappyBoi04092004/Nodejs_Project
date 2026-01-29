@@ -49,8 +49,26 @@ app.use(passport.authenticate('session'));
 configPassportLocal();
 
 //config global variables for views
-app.use((req, res, next) => {
-    res.locals.user = req.user || null;//pass user object to all views
+app.use(async (req, res, next) => {
+    if (req.user) {
+        const { prisma } = require("config/client");
+        const cart = await prisma.cart.findUnique({
+            where: { userId: (req.user as any).id },
+            include: {
+                cartDetails: {
+                    include: {
+                        product: true
+                    }
+                }
+            }
+        });
+        res.locals.user = {
+            ...(req.user as any),
+            cart: cart
+        };
+    } else {
+        res.locals.user = null;
+    }
     next();
 });
 
