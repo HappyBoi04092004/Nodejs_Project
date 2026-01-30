@@ -214,4 +214,14 @@ const postDeleteProductInCart = async(req:Request, res:Response) => {
     return res.redirect('/cart');
 }
 
-export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage, postDeleteProductInCart};
+const getCheckOutPage = async(req:Request, res:Response) => {
+    const user = req.user;
+    if(!user){
+        return res.redirect('/client/login');
+    }
+    const cartDetails =  await getProductInCart(+user.id);
+    const totalPrice = cartDetails?.map(item => +item.product.price * +item.quantity).reduce((a, b) => a + b, 0) || 0;
+    return res.render("client/product/checkout.ejs", { cartDetails, totalPrice });
+}
+
+export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage, postDeleteProductInCart, getCheckOutPage};
