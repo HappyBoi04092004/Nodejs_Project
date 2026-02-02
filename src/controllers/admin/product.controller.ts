@@ -1,6 +1,6 @@
 import { Request, Response} from "express";
 import { ProductSchema, TProductSchema } from "../../validation/product.schema"; 
-import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart ,} from "../../services/client/product-service";
+import { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart, getProductsWithFilter, getProductCount } from "../../services/client/product-service";
 
 import { prisma } from "config/client";
 
@@ -19,6 +19,33 @@ const getDetailProductPage = async (req:Request, res:Response) => {
         console.error("Error fetching product:", error);
         return res.status(500).render("status/500.ejs");
     }
+}
+const getShopPage = async (req: Request, res: Response) => {
+    const page = Number(req.query.page) || 1;
+    const pageSize = 12;
+    const { price, factory, target, q } = req.query;
+    const filter: any = {};
+    if (price) {
+        const [min, max] = String(price).split('-').map(Number);
+        filter.price = { gte: min, lte: max };
+    }
+    if (factory) filter.factory = String(factory);
+    if (target) filter.target = String(target);
+    if (q) {
+        filter.OR = [
+            { name: { contains: String(q), mode: 'insensitive' } },
+            { shortDesc: { contains: String(q), mode: 'insensitive' } },
+            { detailDesc: { contains: String(q), mode: 'insensitive' } }
+        ];
+    }
+    const total = await getProductCount(filter);
+    const products = await getProductsWithFilter(filter, page, pageSize);
+    return res.render("client/shop/show.ejs", {
+        products,
+        query: req.query || {},
+        totalPages: Math.ceil(total / pageSize),
+        currentPage: page
+    });
 }
 
 const getCreateProductPage = async(req:Request, res:Response) => {
@@ -224,4 +251,4 @@ const getCheckOutPage = async(req:Request, res:Response) => {
     return res.render("client/product/checkout.ejs", { cartDetails, totalPrice });
 }
 
-export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage, postDeleteProductInCart, getCheckOutPage};
+export { postAddProductToCart, getDetailProductPage, getCreateProductPage, postAdminProductPage, postAdminCreateProductPage, getEditProductPage, postUpdateProductPage, postDeleteProductPage , getProductById, getCartPage, postDeleteProductInCart, getCheckOutPage, getShopPage};

@@ -13,8 +13,16 @@ const getAdminUserPage = async(req:Request, res:Response) => {
     });
 } 
 
+import { getAllOrdersWithUser } from '../../services/client/order-service';
 const getAdminOrderPage = async(req:Request, res:Response) => {
-    return res.render("admin/order/show.ejs");
+    const page = Number(req.query.page) || 1;
+    const pageSize = 20;
+    const { orders, total } = await getAllOrdersWithUser(page, pageSize);
+    return res.render("admin/order/show.ejs", {
+        orders,
+        currentPage: page,
+        totalPages: Math.ceil(total / pageSize)
+    });
 }
 const getAdminProductPage = async(req:Request, res:Response) => {
     const products = await getAllProducts();

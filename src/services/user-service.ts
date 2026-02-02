@@ -87,6 +87,8 @@ const getAllUsers = async() => {
    // A simple SELECT query
    
 }
+
+
 const getAllRoles = async() => {
     //select all roles from database
     const roles = await prisma.role.findMany();

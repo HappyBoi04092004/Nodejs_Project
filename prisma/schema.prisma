@@ -49,15 +49,16 @@ model Role {
 }
 
 model Order {
-  id              Int     @id @default(autoincrement())
+  id              Int      @id @default(autoincrement())
   totalPrice      Int
-  receiverAddress String  @db.VarChar(255)
-  receiverName    String  @db.VarChar(255)
-  receiverPhone   String  @db.VarChar(20)
-  status          String  @default("PENDING") //PENDING, SHIPPING, DELIVERED, CANCELED
+  receiverAddress String   @db.VarChar(255)
+  receiverName    String   @db.VarChar(255)
+  receiverPhone   String   @db.VarChar(20)
+  status          String   @default("PENDING") //PENDING, SHIPPING, DELIVERED, CANCELED
   paymentMethod   String //CASH, CREDIT_CARD, MOMO, ZALO_PAY
-  paymentStatus   String  @default("PAYMENT_UNPAID") //PAYMENT_UNPAID, PAYMENT_SUCCED, PAYMENT_FAILED
+  paymentStatus   String   @default("PAYMENT_UNPAID") //PAYMENT_UNPAID, PAYMENT_SUCCED, PAYMENT_FAILED
   paymentRef      String?
+  createdAt       DateTime @default(now())
 
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop - Tất cả sản phẩm</title>
+    <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/client/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../layout/header'); -%>
+    <div class="container py-5">
+        <h2 class="mb-4">Tất cả sản phẩm</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <form method="get" class="mb-4 p-3 border rounded bg-light">
+                    <div class="mb-3">
+                        <label>Khoảng giá</label>
+                        <select name="price" class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="0-5000000" <%= query.price==="0-5000000"?'selected':'' %>>Dưới 5 triệu</option>
+                            <option value="5000000-15000000" <%= query.price==="5000000-15000000"?'selected':'' %>>5-15 triệu</option>
+                            <option value="15000000-30000000" <%= query.price==="15000000-30000000"?'selected':'' %>>15-30 triệu</option>
+                            <option value="30000000-100000000" <%= query.price==="30000000-100000000"?'selected':'' %>>Trên 30 triệu</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Hãng</label>
+                        <select name="factory" class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="Dell" <%= query.factory==="Dell"?'selected':'' %>>Dell</option>
+                            <option value="HP" <%= query.factory==="HP"?'selected':'' %>>HP</option>
+                            <option value="Asus" <%= query.factory==="Asus"?'selected':'' %>>Asus</option>
+                            <option value="Acer" <%= query.factory==="Acer"?'selected':'' %>>Acer</option>
+                            <option value="MSI" <%= query.factory==="MSI"?'selected':'' %>>MSI</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Mục đích sử dụng</label>
+                        <select name="target" class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="Gaming" <%= query.target==="Gaming"?'selected':'' %>>Gaming</option>
+                            <option value="Văn phòng" <%= query.target==="Văn phòng"?'selected':'' %>>Văn phòng</option>
+                            <option value="Đồ họa" <%= query.target==="Đồ họa"?'selected':'' %>>Đồ họa</option>
+                            <option value="Học tập" <%= query.target==="Học tập"?'selected':'' %>>Học tập</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Từ khóa</label>
+                        <input type="text" name="q" class="form-control" value="<%= query.q||'' %>" placeholder="Tìm kiếm sản phẩm...">
+                    </div>
+                    <button class="btn btn-primary w-100">Lọc</button>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <% if(products.length === 0){ %>
+                        <div class="col-12"><p>Không có sản phẩm phù hợp.</p></div>
+                    <% } %>
+                    <% products.forEach(function(product){ %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="/images/product/<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="/product/<%= product.id %>"><%= product.name %></a></h5>
+                                    <p class="card-text"><%= product.shortDesc %></p>
+                                    <p class="fw-bold text-danger"><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <% if(totalPages > 1 && currentPage > 1) { %>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <% for(let i=1;i<=totalPages;i++){ %>
+                            <li class="page-item <%= i===currentPage?'active':'' %>">
+                                <a class="page-link" href="?page=<%= i %><% if(query.price){ %>&price=<%= query.price %><% } %><% if(query.factory){ %>&factory=<%= query.factory %><% } %><% if(query.target){ %>&target=<%= query.target %><% } %><% if(query.q){ %>&q=<%= query.q %><% } %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </nav>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%- include('../layout/footer'); -%>
+</body>
+</html>

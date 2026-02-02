@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết đơn hàng</title>
+    <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/client/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../layout/header'); -%>
+    <div class="container py-5">
+        <h2 class="mb-4">Chi tiết đơn hàng</h2>
+        <table class="table table-bordered">
+            <tr><th>Mã đơn</th><td><%= order.id %></td></tr>
+            <tr><th>Ngày đặt</th><td><%= order.createdAt ? order.createdAt.toLocaleString('vi-VN') : '' %></td></tr>
+            <tr><th>Tổng tiền</th><td><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalPrice) %></td></tr>
+            <tr><th>Trạng thái</th><td><%= order.status %></td></tr>
+        </table>
+        <h5>Chi tiết sản phẩm</h5>
+        <table class="table table-bordered">
+            <thead><tr><th>Tên sản phẩm</th><th>Giá</th><th>Số lượng</th></tr></thead>
+            <tbody>
+                <% order.orderDetails.forEach(function(detail){ %>
+                    <tr>
+                        <td><%= detail.product.name %></td>
+                        <td><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(detail.price) %></td>
+                        <td><%= detail.quantity %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <%- include('../layout/footer'); -%>
+</body>
+</html>

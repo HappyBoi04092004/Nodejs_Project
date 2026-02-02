@@ -1,3 +1,17 @@
+// Lấy sản phẩm có filter (phục vụ trang Shop)
+const getProductsWithFilter = async (filter: any, page: number, pageSize: number) => {
+    return prisma.product.findMany({
+        where: filter,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { id: 'desc' }
+    });
+};
+
+// Đếm tổng số sản phẩm theo filter
+const getProductCount = async (filter: any) => {
+    return prisma.product.count({ where: filter });
+};
 import { prisma } from "config/client";
 
 interface CreateProductInput {
@@ -71,45 +85,34 @@ const addProductToCart = async (quantity: number, productId: number, user: any) 
     });
 
     if(cart){
-        //update cart
-        //cap nhat sum gio hang 
-        await prisma.cart.update({
-            where:{id:cart.id},
-            data:{
-                sum: {
-                    increment: quantity,
-                }
-            }
-        })
-
-        //cap nhat cart detail
-        //neu chua co cap nhat quantity
-        //upsert= update + insert
-        const currentCartDetail = await prisma. cartDetail.findFirst({
+        // Kiểm tra cartDetail đã có chưa
+        const currentCartDetail = await prisma.cartDetail.findFirst({
             where:{
                 productId: productId,
                 cartId:cart.id
             }
-        })
-
-
-        await prisma.cartDetail.upsert({
-            where: {
-                id:currentCartDetail?. id ?? 0
-            },
-            update: {
-                quantity:{
-                    increment:quantity
+        });
+        if(currentCartDetail){
+            // update số lượng cartDetail
+            await prisma.cartDetail.update({
+                where: { id: currentCartDetail.id },
+                data: { quantity: { increment: quantity } }
+            });
+        }else{
+            // tạo mới cartDetail
+            await prisma.cartDetail.create({
+                data: {
+                    price: product.price,
+                    quantity: quantity,
+                    productId: productId,
+                    cartId: cart.id
                 }
-            },
-            create: {
-                price: product.price,
-                quantity: quantity,
-                productId:productId,
-                cartId: cart.id 
-        },
-            })
-
+            });
+        }
+        // Cập nhật lại tổng sum đúng với tổng quantity các cartDetail
+        const allDetails = await prisma.cartDetail.findMany({ where: { cartId: cart.id } });
+        const newSum = allDetails.reduce((sum, item) => sum + item.quantity, 0);
+        await prisma.cart.update({ where: { id: cart.id }, data: { sum: newSum } });
     }else{
         //create cart
         await prisma.cart.create({
@@ -123,9 +126,8 @@ const addProductToCart = async (quantity: number, productId: number, user: any) 
                         productId: productId
                     }]
                 }
-
             }
-        })
+        });
     }
 }
 
@@ -170,25 +172,18 @@ const getProductInCart = async (userId: number) => {
     }
 
 const DeleteProductInCart = async (cartDetailId: number, userId: number,sumCart: number) => {
-        await prisma.cartDetail.delete({
-            where: { id: cartDetailId }
-        });
-        if(sumCart ===1){
-            await prisma.cart.delete({
-                where:{userId:userId}
-            })
-        }
-        else{{
-            await prisma.cart.update({
-                where:{userId:userId},
-                data:{
-                    sum:{
-                        decrement:1
-                    }
-                }
-            })
+    await prisma.cartDetail.delete({ where: { id: cartDetailId } });
+    // Sau khi xóa, cập nhật lại sum đúng với tổng quantity còn lại
+    const cart = await prisma.cart.findUnique({ where: { userId } });
+    if(cart){
+        const allDetails = await prisma.cartDetail.findMany({ where: { cartId: cart.id } });
+        const newSum = allDetails.reduce((sum, item) => sum + item.quantity, 0);
+        if(newSum === 0){
+            await prisma.cart.delete({ where: { userId } });
+        }else{
+            await prisma.cart.update({ where: { userId }, data: { sum: newSum } });
         }
     }
     }
 
-export { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart, DeleteProductInCart };
+export { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct, addProductToCart, getProductInCart, DeleteProductInCart, getProductsWithFilter, getProductCount };
