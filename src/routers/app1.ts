@@ -12,14 +12,14 @@ import { isAdmin, isLogin } from "src/middleware/auth";
 
 const router = express.Router();
 const webrouters = (app) =>{
-        // Lịch sử mua hàng user
-        router.get('/order-history',getOrderHistoryPage);
-        router.get('/order/:id',getOrderDetailPage);
-        // Tạo order khi thanh toán
-        router.post('/checkout',postCheckoutOrder);
-            // Quản lý order admin (có phân trang)
-            router.get('/admin/order',getAdminOrderPage);
-            router.get('/shop',getShopPage)
+    // Lịch sử mua hàng user
+    router.get('/order-history',getOrderHistoryPage);
+    router.get('/order/:id',getOrderDetailPage);
+    // Tạo order khi thanh toán
+    router.post('/checkout',postCheckoutOrder);
+    // Quản lý order admin (có phân trang)
+    router.get('/admin/order',getAdminOrderPage);
+    router.get('/shop',getShopPage)
     router.get('/', getHomePage);
     router.get('/client/index.html', getHomePage);
     router.get('/client', getHomePage);

@@ -54,31 +54,41 @@ export const getAllOrders = async (page: number, pageSize: number) => {
 };
 
 export const createOrderFromCart = async (userId: number, receiverName?: string, receiverAddress?: string, receiverPhone?: string) => {
-    const cart = await prisma.cart.findUnique({ where: { userId }, include: { cartDetails: true, user: true } });
-    if (!cart || cart.cartDetails.length === 0) throw new Error('Cart empty');
-    const totalPrice = cart.cartDetails.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    // Lấy thông tin user để điền vào order nếu không có từ form
-    const user = cart.user;
-    const order = await prisma.order.create({
-        data: {
-            userId,
-            totalPrice,
-            receiverAddress: receiverAddress || user?.address || '',
-            receiverName: receiverName || user?.fullName || '',
-            receiverPhone: receiverPhone || user?.phone || '',
-            status: 'PENDING',
-            paymentMethod: 'CASH',
-            paymentStatus: 'PAYMENT_UNPAID',
-            orderDetails: {
-                create: cart.cartDetails.map(item => ({
-                    productId: item.productId,
-                    price: item.price,
-                    quantity: item.quantity
-                }))
+    return await prisma.$transaction(async (tx) => {
+        const cart = await tx.cart.findUnique({ where: { userId }, include: { cartDetails: true, user: true } });
+        if (!cart || cart.cartDetails.length === 0) throw new Error('Cart empty');
+        const totalPrice = cart.cartDetails.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const user = cart.user;
+        // Create order and orderDetails snapshot
+        const order = await tx.order.create({
+            data: {
+                userId,
+                totalPrice,
+                receiverAddress: receiverAddress || user?.address || '',
+                receiverName: receiverName || user?.fullName || '',
+                receiverPhone: receiverPhone || user?.phone || '',
+                status: 'PENDING',
+                paymentMethod: 'CASH',
+                paymentStatus: 'PAYMENT_UNPAID',
+                orderDetails: {
+                    create: cart.cartDetails.map(item => ({
+                        productId: item.productId,
+                        price: item.price,
+                        quantity: item.quantity
+                    }))
+                }
             }
+        });
+        // Increment product.sold for each item
+        for (const item of cart.cartDetails) {
+            await tx.product.update({
+                where: { id: item.productId },
+                data: { sold: { increment: item.quantity } }
+            });
         }
+        // Clear cart
+        await tx.cartDetail.deleteMany({ where: { cartId: cart.id } });
+        await tx.cart.delete({ where: { id: cart.id } });
+        return order;
     });
-    await prisma.cartDetail.deleteMany({ where: { cartId: cart.id } });
-    await prisma.cart.delete({ where: { id: cart.id } });
-    return order;
 };

@@ -149,7 +149,6 @@
     // });
     $('.quantity button').on('click', function () {
         let change = 0;
-
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
         if (button.hasClass('btn-plus')) {
@@ -180,24 +179,31 @@
         const totalPriceElement = $(`p[data-cart-total-price]`);
 
         if (totalPriceElement && totalPriceElement.length) {
-            const currentTotal = totalPriceElement.first().attr("data-cart-total-price");
-            let newTotal = +currentTotal;
-            if (change === 0) {
-                newTotal = +currentTotal;
-            } else {
-                newTotal = change * (+price) + (+currentTotal);
-            }
+            // Tính lại tổng tiền toàn bộ cart
+            let total = 0;
+            $('input[data-cart-detail-price]').each(function() {
+                const price = $(this).attr('data-cart-detail-price');
+                const qty = $(this).val();
+                total += (+price) * (+qty);
+            });
+            totalPriceElement.each(function (index, element) {
+                $(totalPriceElement[index]).text(formatCurrency(total));
+                $(totalPriceElement[index]).attr("data-cart-total-price", total);
+            });
+        }
 
-            //reset change
-            change = 0;
-
-            //update
-            totalPriceElement?.each(function (index, element) {
-                //update text
-                $(totalPriceElement[index]).text(formatCurrency(newTotal));
-
-                //update data-attribute
-                $(totalPriceElement[index]).attr("data-cart-total-price", newTotal);
+        // Gửi AJAX cập nhật quantity lên server
+        if (id) {
+            $.ajax({
+                url: '/update-cart-quantity/' + id,
+                method: 'POST',
+                data: { quantity: newVal },
+                success: function(res) {
+                    // Có thể show thông báo thành công nếu muốn
+                },
+                error: function(err) {
+                    alert('Lỗi khi cập nhật số lượng!');
+                }
             });
         }
     });

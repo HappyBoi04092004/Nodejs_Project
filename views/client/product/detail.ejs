@@ -89,24 +89,22 @@
                                 </div>
 
 
-                                <div class="input-group quantity mb-5" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <a href="#"
-                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary add-to-cart-btn"
-                                    data-product-id="<%= product.id %>"><i
-                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <form id="add-to-cart-form" action="/add-product-to-cart/<%= product.id %>" method="post">
+                                  <div class="input-group quantity mb-5" style="width: 100px;">
+                                      <div class="input-group-btn">
+                                          <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                              <i class="fa fa-minus"></i>
+                                          </button>
+                                      </div>
+                                      <input name="quantity" id="product-quantity" type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                      <div class="input-group-btn">
+                                          <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                              <i class="fa fa-plus"></i>
+                                          </button>
+                                      </div>
+                                  </div>
+                                  <button type="submit" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary add-to-cart-btn" data-product-id="<%= product.id %>"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
+                                </form>
                             </div>
                             <div class="col-lg-12">
                                 <nav>
@@ -138,31 +136,31 @@
                                     <ul class="list-unstyled fruite-categorie">
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Laptops</a>
                                                 <span>(3)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Desktops</a>
                                                 <span>(5)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Tablets</a>
                                                 <span>(2)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Smartphones</a>
                                                 <span>(8)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Accessories</a>
                                                 <span>(5)</span>
                                             </div>
                                         </li>
@@ -195,7 +193,22 @@
             <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
 
             <!-- Template Javascript -->
-            <script src="/client/js/main.js"></script>
+                        <script src="/client/js/main.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                // Quantity plus/minus for product detail
+                                $('.btn-minus').click(function() {
+                                    var $input = $('#product-quantity');
+                                    var value = parseInt($input.val()) || 1;
+                                    if (value > 1) $input.val(value - 1);
+                                });
+                                $('.btn-plus').click(function() {
+                                    var $input = $('#product-quantity');
+                                    var value = parseInt($input.val()) || 1;
+                                    $input.val(value + 1);
+                                });
+                            });
+                        </script>
 </body>
 
 </html>
