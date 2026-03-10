@@ -18,7 +18,7 @@ const webrouters = (app) =>{
     // Tạo order khi thanh toán
     router.post('/checkout',postCheckoutOrder);
     // Quản lý order admin (có phân trang)
-    router.get('/admin/order',getAdminOrderPage);
+    router.get('/admin/order',isAdmin,getAdminOrderPage);
     router.get('/shop',getShopPage)
     router.get('/', getHomePage);
     router.get('/client/index.html', getHomePage);
@@ -27,23 +27,23 @@ const webrouters = (app) =>{
 
     //admin router
     router.get('/admin', isAdmin, getDashboardPage);
-    router.get('/admin/create-user', getCreateUserPage);
-    router.get('/admin/user', getAdminUserPage);
-    router.post('/admin/delete-user/:id',postDeleteUser);
-    router.get('/admin/view-user/:id',getViewUser);
-    router.post('/admin/update-user',fileUploadMiddleware("avatar"),postUpdateUser);
-    router.post('/admin/handle-create-user',fileUploadMiddleware("avatar"), postCreateUser);
+    router.get('/admin/create-user',isAdmin, getCreateUserPage);
+    router.get('/admin/user',isAdmin, getAdminUserPage);
+    router.post('/admin/delete-user/:id',isAdmin,postDeleteUser);
+    router.get('/admin/view-user/:id',isAdmin,getViewUser);
+    router.post('/admin/update-user',isAdmin,fileUploadMiddleware("avatar"),postUpdateUser);
+    router.post('/admin/handle-create-user',isAdmin,fileUploadMiddleware("avatar"), postCreateUser);
     // router.post('/admin/handle-create-user',upload.single('avatar'), (req, res) => {
     //     return res.send('SUCCESS');
     // });
 
-    router.get('/admin/product', getAdminProductPage);
-    router.get('/admin/create-product', getCreateProductPage);
-    router.post('/admin/handle-create-product',fileUploadMiddleware("image","images/product"), postAdminCreateProductPage);
-    router.get('/admin/view-product/:id', getDetailProductPage);
-    router.get('/admin/edit-product/:id', getEditProductPage);
-    router.post('/admin/update-product/:id', fileUploadMiddleware("image","images/product"), postUpdateProductPage);
-    router.post('/admin/delete-product/:id', postDeleteProductPage);
+    router.get('/admin/product',isAdmin, getAdminProductPage);
+    router.get('/admin/create-product',isAdmin, getCreateProductPage);
+    router.post('/admin/handle-create-product',isAdmin,fileUploadMiddleware("image","images/product"), postAdminCreateProductPage);
+    router.get('/admin/view-product/:id',isAdmin, getDetailProductPage);
+    router.get('/admin/edit-product/:id',isAdmin, getEditProductPage);
+    router.post('/admin/update-product/:id',isAdmin, fileUploadMiddleware("image","images/product"), postUpdateProductPage);
+    router.post('/admin/delete-product/:id',isAdmin, postDeleteProductPage);
     router.get('/contact', getContactPage);
 
     router.get("/success-redirect", getSuccessRedirectPage);
@@ -61,7 +61,7 @@ const webrouters = (app) =>{
     router.post('/delete-product-in-cart/:id',postDeleteProductInCart)
     router.get('/checkout',getCheckOutPage);
     
-    router.get('/admin/order', getAdminOrderPage);
+    router.get('/admin/order',isAdmin, getAdminOrderPage);
     // router.listen(PORT, () => {
     //     console.log(`App is running on port : ${PORT} `);
     //     console.log(`Link vao thang web: http://localhost:${PORT}`);

@@ -106,43 +106,40 @@
         <div class="row g-4">
           <% products.forEach(function(product) { %>
             <div class="col-md-6 col-lg-4 col-xl-3">
-              <div class="rounded position-relative fruite-item">
-                <div class="fruite-img">
+              <div class="rounded position-relative pc-item shadow-sm" style="background: #fff;">
+                <div class="pc-img" style="height:220px;overflow:hidden;border-radius:12px 12px 0 0;">
                   <img
                     src="/images/product/<%= product.image %>"
-                    class="img-fluid w-100 rounded-top product-thumb"
-                    alt=""
-                    style="height:220px;object-fit:cover;border-radius:12px;"
+                    class="img-fluid w-100 product-thumb"
+                    alt="PC image"
+                    style="height:220px;object-fit:cover;border-radius:12px 12px 0 0;transition:transform .3s;"
+                    onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"
                   />
                 </div>
                 <div
-                  class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                  style="top: 10px; left: 10px"
+                  class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                  style="top: 10px; left: 10px;font-weight:600;letter-spacing:1px;"
                 >
                   PC
                 </div>
                 <div
-                  class="p-4 border border-secondary border-top-0 rounded-bottom"
+                  class="p-4 border border-light border-top-0 rounded-bottom"
                 >
-                  <h4 style="font-size: 20px;"><a href="/product/<%= product.id %>"><%= product.name %></a></h4>
-                  <p>
+                  <h4 style="font-size: 20px;font-weight:700;"><a href="/product/<%= product.id %>" class="text-dark text-decoration-none"><%= product.name %></a></h4>
+                  <p class="text-muted" style="min-height:40px;">
                     <%= product.shortDesc %>
                   </p>
-                  <div
-                    class="d-flex flex-lg-wrap justify-content-center"
-                  >
-                    <p style="text-align: center;font-size: 15px;" class="text-dark fs-5 fw-bold mb-0">
+                  <div class="d-flex flex-lg-wrap justify-content-center align-items-center gap-2">
+                    <span style="font-size: 18px;" class="text-primary fw-bold mb-0">
                       <%= new Intl.NumberFormat('vi-VN', {
                         style: 'currency' , currency: 'VND'
                       }).format(product.price) %>  
-                    </p>
-                    <form method="post"
-                      action="/add-product-to-cart/<%= product.id %>">
+                    </span>
+                    <form method="post" action="/add-product-to-cart/<%= product.id %>">
                       <button
-                        class="mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                        <i
-                          class="fa fa-shopping-bag me-2 text-primary"></i>
-                        Add to cart
+                        class="mx-auto btn btn-outline-primary rounded-pill px-3 fw-semibold">
+                        <i class="fa fa-shopping-bag me-2"></i>
+                        Thêm vào giỏ
                       </button>
                     </form>
                   </div>
@@ -161,20 +158,16 @@
         <div class="row g-4 justify-content-center">
           <div class="col-md-6 col-lg-4">
             <a href="#">
-              <div
-                class="service-item bg-secondary rounded border border-secondary"
-              >
+              <div class="service-item bg-secondary rounded border border-secondary">
                 <img
-                  src="/client/img/featur-1.jpg"
-                  class="img-fluid rounded-top w-100"
-                  alt=""
+                  src="/images/product/1711080948771-acer-01.png"
+                  class="img-fluid rounded-top h-100 w-100"
+                  alt="PC demo"
                 />
                 <div class="px-4 rounded-bottom">
-                  <div
-                    class="service-content bg-primary text-center p-4 rounded"
-                  >
-                    <h5 class="text-white">Fresh Apples</h5>
-                    <h3 class="mb-0">20% OFF</h3>
+                  <div class="service-content bg-primary text-center p-4 rounded">
+                    <h5 class="text-white">Laptop mới nhất</h5>
+                    <h3 class="mb-0">Giảm 20%</h3>
                   </div>
                 </div>
               </div>
@@ -184,14 +177,14 @@
             <a href="#">
               <div class="service-item bg-dark rounded border border-dark">
                 <img
-                  src="/client/img/featur-2.jpg"
+                  src="/images/product/1711081278418-dell-02.png"
                   class="img-fluid rounded-top w-100"
-                  alt=""
+                  alt="PC feature"
                 />
                 <div class="px-4 rounded-bottom">
                   <div class="service-content bg-light text-center p-4 rounded">
-                    <h5 class="text-primary">Tasty Fruits</h5>
-                    <h3 class="mb-0">Free delivery</h3>
+                    <h5 class="text-primary">Miễn phí giao hàng</h5>
+                    <h3 class="mb-0">Toàn quốc</h3>
                   </div>
                 </div>
               </div>
@@ -199,20 +192,16 @@
           </div>
           <div class="col-md-6 col-lg-4">
             <a href="#">
-              <div
-                class="service-item bg-primary rounded border border-primary"
-              >
+              <div class="service-item bg-primary rounded border border-primary">
                 <img
-                  src="/client/img/featur-3.jpg"
+                  src="/images/product/1711080948771-acer-01.png"
                   class="img-fluid rounded-top w-100"
-                  alt=""
+                  alt="PC gaming"
                 />
                 <div class="px-4 rounded-bottom">
-                  <div
-                    class="service-content bg-secondary text-center p-4 rounded"
-                  >
-                    <h5 class="text-white">Exotic Vegitable</h5>
-                    <h3 class="mb-0">Discount 30$</h3>
+                  <div class="service-content bg-secondary text-center p-4 rounded">
+                    <h5 class="text-white">PC Gaming</h5>
+                    <h3 class="mb-0">Bảo hành 2 năm</h3>
                   </div>
                 </div>
               </div>
@@ -224,271 +213,56 @@
     <!-- Featurs End -->
 
     <!-- Vesitable Shop Start-->
-    <div class="container-fluid vesitable py-5">
+    <!-- Sản phẩm nổi bật PC/Laptop -->
+    <div class="container-fluid highlight-pc py-5">
       <div class="container py-5">
-        <h1 class="mb-0">Fresh Organic Vegetables</h1>
-        <div class="owl-carousel vegetable-carousel justify-content-center">
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-6.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Parsely</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
+        <h1 class="mb-0">PC & Laptop Nổi Bật</h1>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-4 col-lg-3">
+            <div class="border border-primary rounded position-relative pc-highlight-item bg-white">
+              <div class="pc-highlight-img">
+                <img src="/images/product/1711080948771-acer-01.png" class="img-fluid w-100 rounded-top" alt="Acer Aspire 7" />
+              </div>
+              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px">Laptop</div>
+              <div class="p-4 rounded-bottom">
+                <h4>Acer Aspire 7</h4>
+                <p>Laptop gaming mạnh mẽ, thiết kế hiện đại, phù hợp học tập & làm việc.</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                  <p class="text-dark fs-5 fw-bold mb-0">18.990.000 ₫</p>
+                  <a href="#" class="btn btn-outline-primary rounded-pill px-3"><i class="fa fa-shopping-bag me-2"></i> Thêm vào giỏ</a>
+                </div>
               </div>
             </div>
           </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-1.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Parsely</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
+          <div class="col-md-4 col-lg-3">
+            <div class="border border-primary rounded position-relative pc-highlight-item bg-white">
+              <div class="pc-highlight-img">
+                <img src="/images/product/1711080948771-acer-01.png" class="img-fluid w-100 rounded-top" alt="Macbook Pro" />
+              </div>
+              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px">Laptop</div>
+              <div class="p-4 rounded-bottom">
+                <h4>Macbook Pro 2023</h4>
+                <p>Hiệu năng vượt trội, màn hình Retina sắc nét, pin lâu.</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                  <p class="text-dark fs-5 fw-bold mb-0">32.990.000 ₫</p>
+                  <a href="#" class="btn btn-outline-primary rounded-pill px-3"><i class="fa fa-shopping-bag me-2"></i> Thêm vào giỏ</a>
+                </div>
               </div>
             </div>
           </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-3.png"
-                class="img-fluid w-100 rounded-top bg-light"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Banana</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
+          <div class="col-md-4 col-lg-3">
+            <div class="border border-primary rounded position-relative pc-highlight-item bg-white">
+              <div class="pc-highlight-img">
+                <img src="/images/product/1711081278418-dell-02.png" class="img-fluid w-100 rounded-top" alt="PC Gaming" />
               </div>
-            </div>
-          </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-4.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Bell Papper</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-5.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Potatoes</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-6.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Parsely</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-5.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Potatoes</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="border border-primary rounded position-relative vesitable-item"
-          >
-            <div class="vesitable-img">
-              <img
-                src="/client/img/vegetable-item-6.jpg"
-                class="img-fluid w-100 rounded-top"
-                alt=""
-              />
-            </div>
-            <div
-              class="text-white bg-primary px-3 py-1 rounded position-absolute"
-              style="top: 10px; right: 10px"
-            >
-              Vegetable
-            </div>
-            <div class="p-4 rounded-bottom">
-              <h4>Parsely</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
-                eiusmod te incididunt
-              </p>
-              <div class="d-flex justify-content-between flex-lg-wrap">
-                <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                <a
-                  href="#"
-                  class="btn border border-secondary rounded-pill px-3 text-primary"
-                  ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                  cart</a
-                >
+              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px">PC</div>
+              <div class="p-4 rounded-bottom">
+                <h4>PC Gaming RTX 4060</h4>
+                <p>PC cấu hình cao, card đồ họa RTX 4060, chơi game & đồ họa mượt mà.</p>
+                <div class="d-flex justify-content-between flex-lg-wrap">
+                  <p class="text-dark fs-5 fw-bold mb-0">25.990.000 ₫</p>
+                  <a href="#" class="btn btn-outline-primary rounded-pill px-3"><i class="fa fa-shopping-bag me-2"></i> Thêm vào giỏ</a>
+                </div>
               </div>
             </div>
           </div>
@@ -503,35 +277,29 @@
         <div class="row g-4 align-items-center">
           <div class="col-lg-6">
             <div class="py-4">
-              <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
-              <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
+              <h1 class="display-3 text-white">Khuyến mãi PC - Laptop</h1>
+              <p class="fw-normal display-3 text-dark mb-4">Giảm giá sốc lên đến 30%</p>
               <p class="mb-4 text-dark">
-                The generated Lorem Ipsum is therefore always free from
-                repetition injected humour, or non-characteristic words etc.
+                Mua PC, laptop chính hãng, bảo hành dài hạn, hỗ trợ trả góp 0%. Đặt hàng ngay hôm nay để nhận ưu đãi đặc biệt!
               </p>
               <a
                 href="#"
                 class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5"
-                >BUY</a
-              >
+                >Xem ngay</a>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="position-relative">
               <img
-                src="/client/img/baner-1.png"
+                src="/images/product/1711080948771-acer-01.png"
                 class="img-fluid w-100 rounded"
-                alt=""
+                alt="Banner PC"
               />
               <div
                 class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute"
                 style="width: 140px; height: 140px; top: 0; left: 0"
               >
-                <h1 style="font-size: 100px">1</h1>
-                <div class="d-flex flex-column">
-                  <span class="h2 mb-0">50$</span>
-                  <span class="h4 text-muted mb-0">kg</span>
-                </div>
+                <h1 style="font-size: 60px">-30%</h1>
               </div>
             </div>
           </div>
@@ -556,7 +324,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-1.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -586,7 +354,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-2.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -616,7 +384,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-3.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -646,7 +414,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-4.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -676,7 +444,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-5.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -706,7 +474,7 @@
               <div class="row align-items-center">
                 <div class="col-6">
                   <img
-                    src="/client/img/best-product-6.jpg"
+                    src="/images/product/1711080948771-acer-01.png"
                     class="img-fluid rounded-circle w-100"
                     alt=""
                   />
@@ -734,7 +502,7 @@
           <div class="col-md-6 col-lg-6 col-xl-3">
             <div class="text-center">
               <img
-                src="/client/img/fruite-item-1.jpg"
+                src="/images/product/1711080948771-acer-01.png"
                 class="img-fluid rounded"
                 alt=""
               />
@@ -760,7 +528,7 @@
           <div class="col-md-6 col-lg-6 col-xl-3">
             <div class="text-center">
               <img
-                src="/client/img/fruite-item-2.jpg"
+                src="/images/product/1711080948771-acer-01.png"
                 class="img-fluid rounded"
                 alt=""
               />
@@ -786,7 +554,7 @@
           <div class="col-md-6 col-lg-6 col-xl-3">
             <div class="text-center">
               <img
-                src="/client/img/fruite-item-3.jpg"
+                src="/images/product/1711080948771-acer-01.png"
                 class="img-fluid rounded"
                 alt=""
               />
@@ -812,7 +580,7 @@
           <div class="col-md-6 col-lg-6 col-xl-3">
             <div class="text-center">
               <img
-                src="/client/img/fruite-item-4.jpg"
+                src="/images/product/1711080948771-acer-01.png"
                 class="img-fluid rounded"
                 alt=""
               />

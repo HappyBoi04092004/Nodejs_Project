@@ -12,10 +12,12 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  
+    console.log(req.path);
+    console.log(req.user);
     if(req.path.startsWith('/admin')) {
         const user = req.user;
         if (user?.role?.name === 'Admin') {
+            
             next();
             return;
         } else {

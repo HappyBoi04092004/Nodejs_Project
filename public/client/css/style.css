@@ -303,6 +303,8 @@
 }
 .fruite .fruite-item:hover {
     box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+    z-index: 2;
 }
 
 .fruite .fruite-item .fruite-img {
@@ -316,7 +318,17 @@
 }
 
 .fruite .fruite-item .fruite-img img:hover {
-    transform: scale(1.3);
+    transform: scale(0.85);
+    border: 3px solid var(--bs-secondary);
+    border-radius: 10px;
+}
+.fruite .tab-class {
+    margin-bottom: 40px;
+    margin-top: 20px;
+    padding-top: 20px;
+    background: var(--bs-light);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 /*** Fruits End ***/
 
