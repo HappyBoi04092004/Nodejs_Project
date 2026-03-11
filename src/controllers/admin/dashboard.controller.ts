@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import { getAllUsers } from "../../services/user-service";
 import { getAllProducts } from "../../services/client/product-service";
@@ -28,4 +29,18 @@ const getAdminProductPage = async(req:Request, res:Response) => {
     const products = await getAllProducts();
     return res.render("admin/product/show.ejs", { products: products });
 }
-export { getDashboardPage, getAdminUserPage, getAdminOrderPage, getAdminProductPage };
+
+const getAdminLogout = async(req:Request, res:Response) => {
+    req.logout(function(err) {
+        if (err) {
+            console.log("Logout error:", err);
+            return res.status(500).send("Error logging out");
+        }
+        return res.redirect('/');
+    });
+}
+const getAdminSettingPage = async(req:Request, res:Response) => {
+    return res.render("admin/setting.ejs");
+}
+
+export { getDashboardPage, getAdminUserPage, getAdminOrderPage, getAdminProductPage, getAdminLogout, getAdminSettingPage };
