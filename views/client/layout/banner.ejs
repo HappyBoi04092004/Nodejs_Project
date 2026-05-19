@@ -1,17 +1,15 @@
-<div class="container-fluid py-5 mb-5 hero-header">
+<div class="container-fluid py-5 mb-5 hero-header" style="margin-top: 160px">
   <div class="container py-5">
     <div class="row g-5 align-items-center">
-      <div class="col-md-12 col-lg-7">
-        <h4 class="mb-3 text-secondary">
-          Laptop Chính Hãng – Hiệu Năng Vượt Trội
-        </h4>
-        <h2 class="mb-5 display-3 text-primary">Mạnh mẽ • Bền bỉ</h2>
+      <div class="col-lg-7">
+        <h4 class="mb-3 text-secondary">Hoa tươi mỗi ngày – Giao nhanh Hà Nội</h4>
+        <h2 class="mb-4 display-4 text-primary fw-bold">Tươi mát • Ngọt ngào • Ý nghĩa</h2>
         <form class="position-relative mx-auto" method="get" action="/shop">
           <input
             class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill"
             type="text"
             name="q"
-            placeholder="Tìm kiếm sản phẩm..."
+            placeholder="Tìm bó hoa, giỏ hoa..."
             value="<%= typeof query !== 'undefined' && query.q ? query.q : '' %>"
           />
           <button
@@ -23,52 +21,11 @@
           </button>
         </form>
       </div>
-      <div class="col-md-12 col-lg-5">
-        <div
-          id="carouselId"
-          class="carousel slide position-relative"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active rounded">
-              <img
-                src="/client/img/banner-1.jpg"
-                class="img-fluid w-100 bg-secondary rounded"
-                style="height: 300px"
-                alt="First slide"
-              />
-              <a href="#" class="btn px-4 py-2 text-white rounded">Laptops</a>
-            </div>
-            <div class="carousel-item rounded">
-              <img
-                src="/client/img/banner-2.jpg"
-                class="img-fluid w-100 rounded"
-                style="height: 300px"
-                alt="Second slide"
-              />
-              <a href="#" class="btn px-4 py-2 text-white rounded"
-                >Accessories</a
-              >
-            </div>
-          </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselId"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Trước</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselId"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Sau</span>
-          </button>
+      <div class="col-lg-5 text-center">
+        <div class="rounded-4 p-5 bg-white shadow-sm">
+          <i class="fas fa-heart text-primary display-1 mb-3"></i>
+          <p class="lead mb-0 text-muted">Hơn 50+ mẫu hoa cho sinh nhật, cưới hỏi, khai trương</p>
+          <a href="/shop" class="btn btn-primary rounded-pill mt-3 px-4">Khám phá cửa hàng</a>
         </div>
       </div>
     </div>

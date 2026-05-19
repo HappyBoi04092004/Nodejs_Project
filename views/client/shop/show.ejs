@@ -1,160 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <title>HP Shop - Website Shop</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Icon Font Stylesheet -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-
-    <!-- Libraries Stylesheet -->
-    <link href="client/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
-    <link
-      href="client/lib/owlcarousel/assets/owl.carousel.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="client/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Template Stylesheet -->
-    <link href="client/css/style.css" rel="stylesheet" />
+    <%- include('../layout/head', { pageTitle: 'Cửa hàng' }); -%>
   </head>
-
   <body>
-    <!-- Spinner Start -->
-    <div
-      id="spinner"
-      class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
-    >
-      <div class="spinner-grow text-primary" role="status"></div>
-    </div>
-    <!-- Spinner End -->
-
-    <!-- Navbar start -->
     <%- include('../layout/header'); -%>
-    <!-- Navbar End -->
-<div class="container py-5">
-        <h2 class="mb-4">Tất cả sản phẩm</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <form method="get" class="mb-4 p-3 border rounded bg-light">
-                    <div class="mb-3">
-                        <label>Khoảng giá</label>
-                        <select name="price" class="form-select">
-                            <option value="">Tất cả</option>
-                            <option value="0-5000000" <%= query.price==="0-5000000"?'selected':'' %>>Dưới 5 triệu</option>
-                            <option value="5000000-15000000" <%= query.price==="5000000-15000000"?'selected':'' %>>5-15 triệu</option>
-                            <option value="15000000-30000000" <%= query.price==="15000000-30000000"?'selected':'' %>>15-30 triệu</option>
-                            <option value="30000000-100000000" <%= query.price==="30000000-100000000"?'selected':'' %>>Trên 30 triệu</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Hãng</label>
-                        <select name="factory" class="form-select">
-                            <option value="">Tất cả</option>
-                            <option value="Dell" <%= query.factory==="Dell"?'selected':'' %>>Dell</option>
-                            <option value="HP" <%= query.factory==="HP"?'selected':'' %>>HP</option>
-                            <option value="Asus" <%= query.factory==="Asus"?'selected':'' %>>Asus</option>
-                            <option value="Acer" <%= query.factory==="Acer"?'selected':'' %>>Acer</option>
-                            <option value="MSI" <%= query.factory==="MSI"?'selected':'' %>>MSI</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Mục đích sử dụng</label>
-                        <select name="target" class="form-select">
-                            <option value="">Tất cả</option>
-                            <option value="Gaming" <%= query.target==="Gaming"?'selected':'' %>>Gaming</option>
-                            <option value="Văn phòng" <%= query.target==="Văn phòng"?'selected':'' %>>Văn phòng</option>
-                            <option value="Đồ họa" <%= query.target==="Đồ họa"?'selected':'' %>>Đồ họa</option>
-                            <option value="Học tập" <%= query.target==="Học tập"?'selected':'' %>>Học tập</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Từ khóa</label>
-                        <input type="text" name="q" class="form-control" value="<%= query.q||'' %>" placeholder="Tìm kiếm sản phẩm...">
-                    </div>
-                    <button class="btn btn-primary w-100">Lọc</button>
-                </form>
+    <%- include('../layout/search-modal'); -%>
+
+    <main class="container py-5" style="margin-top: 180px">
+      <h1 class="text-primary mb-4">Cửa hàng hoa</h1>
+      <div class="row">
+        <aside class="col-md-3 mb-4">
+          <form method="get" class="p-3 border rounded bg-white shadow-sm">
+            <div class="mb-3">
+              <label class="form-label">Khoảng giá</label>
+              <select name="price" class="form-select">
+                <option value="">Tất cả</option>
+                <option value="0-300000" <%= query.price==="0-300000"?'selected':'' %>>Dưới 300.000đ</option>
+                <option value="300000-600000" <%= query.price==="300000-600000"?'selected':'' %>>300k – 600k</option>
+                <option value="600000-1000000" <%= query.price==="600000-1000000"?'selected':'' %>>600k – 1 triệu</option>
+                <option value="1000000-5000000" <%= query.price==="1000000-5000000"?'selected':'' %>>Trên 1 triệu</option>
+              </select>
             </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <% if(products.length === 0){ %>
-                        <div class="col-12"><p>Không có sản phẩm phù hợp.</p></div>
-                    <% } %>
-                    <% products.forEach(function(product){ %>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <img src="/images/product/<%= product.image %>" class="card-img-top product-thumb" alt="<%= product.name %>" style="height:220px;object-fit:cover;border-radius:12px;">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="/product/<%= product.id %>"><%= product.name %></a></h5>
-                                    <p class="card-text"><%= product.shortDesc %></p>
-                                    <p class="fw-bold text-danger"><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) %></p>
-                                </div>
-                            </div>
-                        </div>
-                    <% }) %>
+            <div class="mb-3">
+              <label class="form-label">Loại hoa</label>
+              <select name="factory" class="form-select">
+                <option value="">Tất cả</option>
+                <option value="HOA-HONG" <%= query.factory==="HOA-HONG"?'selected':'' %>>Hoa hồng</option>
+                <option value="TULIP" <%= query.factory==="TULIP"?'selected':'' %>>Tulip</option>
+                <option value="HOA-LY" <%= query.factory==="HOA-LY"?'selected':'' %>>Hoa ly</option>
+                <option value="HOA-CUOI" <%= query.factory==="HOA-CUOI"?'selected':'' %>>Hoa cưới</option>
+                <option value="HOA-MIX" <%= query.factory==="HOA-MIX"?'selected':'' %>>Mix theo mùa</option>
+                <option value="KE-HOA" <%= query.factory==="KE-HOA"?'selected':'' %>>Kệ khai trương</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Dịp tặng</label>
+              <select name="target" class="form-select">
+                <option value="">Tất cả</option>
+                <option value="SINH-NHAT" <%= query.target==="SINH-NHAT"?'selected':'' %>>Sinh nhật</option>
+                <option value="TINH-YEU" <%= query.target==="TINH-YEU"?'selected':'' %>>Tình yêu</option>
+                <option value="DAM-CUOI" <%= query.target==="DAM-CUOI"?'selected':'' %>>Đám cưới</option>
+                <option value="KHAI-TRUONG" <%= query.target==="KHAI-TRUONG"?'selected':'' %>>Khai trương</option>
+                <option value="VAN-PHONG" <%= query.target==="VAN-PHONG"?'selected':'' %>>Văn phòng</option>
+                <option value="QUA-TANG" <%= query.target==="QUA-TANG"?'selected':'' %>>Quà tặng</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Từ khóa</label>
+              <input type="text" name="q" class="form-control" value="<%= query.q||'' %>" placeholder="Tìm hoa..." />
+            </div>
+            <button class="btn btn-primary w-100">Lọc sản phẩm</button>
+          </form>
+        </aside>
+        <section class="col-md-9">
+          <div class="row g-4">
+            <% if(products.length === 0){ %>
+            <div class="col-12"><p class="text-muted">Không có sản phẩm phù hợp.</p></div>
+            <% } %>
+            <% products.forEach(function(product){ %>
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100 border-0 shadow-sm">
+                <%- include('../layout/product-img', { product }); -%>
+                <div class="card-body">
+                  <h5 class="card-title"><a href="/product/<%= product.id %>" class="text-decoration-none text-dark"><%= product.name %></a></h5>
+                  <p class="card-text small text-muted"><%= product.shortDesc %></p>
+                  <p class="fw-bold text-primary"><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) %></p>
+                  <a href="/product/<%= product.id %>" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
                 </div>
-                <% if(totalPages > 1) { %>
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <% 
-                        // Hiển thị tối đa 5 trang, luôn giữ currentPage ở giữa nếu có thể
-                        let start = Math.max(1, currentPage - 2);
-                        let end = Math.min(totalPages, currentPage + 2);
-                        if (end - start < 4) {
-                          if (start === 1) end = Math.min(totalPages, start + 4);
-                          else if (end === totalPages) start = Math.max(1, end - 4);
-                        }
-                        for(let i=start;i<=end;i++){ %>
-                            <li class="page-item <%= i===currentPage?'active':'' %>">
-                                <a class="page-link" href="?page=<%= i %><% if(query.price){ %>&price=<%= query.price %><% } %><% if(query.factory){ %>&factory=<%= query.factory %><% } %><% if(query.target){ %>&target=<%= query.target %><% } %><% if(query.q){ %>&q=<%= query.q %><% } %>"><%= i %></a>
-                            </li>
-                        <% } %>
-                    </ul>
-                </nav>
-                <% } %>
+              </div>
             </div>
-        </div>
-    </div>
-    <!-- Footer Start -->
-    <%- include("../layout/footer.ejs") -%>
-    <!-- Footer End -->
+            <% }) %>
+          </div>
+          <% if(totalPages > 1) { %>
+          <nav class="mt-4" aria-label="Phân trang">
+            <ul class="pagination justify-content-center">
+              <% let start = Math.max(1, currentPage - 2);
+                 let end = Math.min(totalPages, currentPage + 2);
+                 for(let i=start;i<=end;i++){ %>
+              <li class="page-item <%= i===currentPage?'active':'' %>">
+                <a class="page-link" href="?page=<%= i %><% if(query.price){ %>&price=<%= query.price %><% } %><% if(query.factory){ %>&factory=<%= query.factory %><% } %><% if(query.target){ %>&target=<%= query.target %><% } %><% if(query.q){ %>&q=<%= encodeURIComponent(query.q) %><% } %>"><%= i %></a>
+              </li>
+              <% } %>
+            </ul>
+          </nav>
+          <% } %>
+        </section>
+      </div>
+    </main>
 
-    <!-- Back to Top -->
-    <a
-      href="#"
-      class="btn btn-primary border-3 border-primary rounded-circle back-to-top"
-      ><i class="fa fa-arrow-up"></i
-    ></a>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="client/lib/easing/easing.min.js"></script>
-    <script src="client/lib/waypoints/waypoints.min.js"></script>
-    <script src="client/lib/lightbox/js/lightbox.min.js"></script>
-    <script src="client/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="client/js/main.js"></script>
+    <%- include('../layout/footer'); -%>
+    <%- include('../layout/scripts'); -%>
   </body>
 </html>

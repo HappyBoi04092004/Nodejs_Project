@@ -5,9 +5,18 @@ import {getCreateProductPage, getDetailProductPage ,postAdminProductPage, postAd
 import fileUploadMiddleware from "../middleware/multer";
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from "controllers/client/auth.controller";
 import { getOrderHistoryPage, getOrderDetailPage, postCheckoutOrder } from "controllers/client/order.controller";
-import { getContactPage } from "controllers/client/contact.controller";
+import { getContactPage, postContactPage } from "controllers/client/contact.controller";
+import {
+  getAboutPage,
+  getPrivacyPage,
+  getTermsPage,
+  getReturnPolicyPage,
+  getPurchasePolicyPage,
+  getSupportPage,
+} from "controllers/client/page.controller";
 import passport from "passport";
 import { isAdmin, isLogin } from "src/middleware/auth";
+import requireAuth from "src/middleware/require-auth";
 import { getAdminOrderDetailPage } from "controllers/admin/order.controller";
 import { getAdminSettingPage } from "../controllers/admin/dashboard.controller";
 //import { get } from "http";
@@ -15,10 +24,9 @@ import { getAdminSettingPage } from "../controllers/admin/dashboard.controller";
 const router = express.Router();
 const webrouters = (app) =>{
     // Lịch sử mua hàng user
-    router.get('/order-history',getOrderHistoryPage);
-    router.get('/order/:id',getOrderDetailPage);
-    // Tạo order khi thanh toán
-    router.post('/checkout',postCheckoutOrder);
+    router.get('/order-history', requireAuth, getOrderHistoryPage);
+    router.get('/order/:id', requireAuth, getOrderDetailPage);
+    router.post('/checkout', requireAuth, postCheckoutOrder);
     // Quản lý order admin (có phân trang)
     router.get('/admin/order',isAdmin,getAdminOrderPage);
     router.get('/shop',getShopPage)
@@ -49,6 +57,13 @@ const webrouters = (app) =>{
     router.post('/admin/update-product/:id',isAdmin, fileUploadMiddleware("image","images/product"), postUpdateProductPage);
     router.post('/admin/delete-product/:id',isAdmin, postDeleteProductPage);
     router.get('/contact', getContactPage);
+    router.post('/contact', postContactPage);
+    router.get('/about', getAboutPage);
+    router.get('/privacy', getPrivacyPage);
+    router.get('/terms', getTermsPage);
+    router.get('/return-policy', getReturnPolicyPage);
+    router.get('/purchase-policy', getPurchasePolicyPage);
+    router.get('/support', getSupportPage);
 
     router.get("/success-redirect", getSuccessRedirectPage);
     router.get('/client/login' ,getLoginPage);
@@ -63,7 +78,7 @@ const webrouters = (app) =>{
     router.post('/add-product-to-cart/:id', postAddProductToCart);
     router.get('/cart', getCartPage);
     router.post('/delete-product-in-cart/:id',postDeleteProductInCart)
-    router.get('/checkout',getCheckOutPage);
+    router.get('/checkout', requireAuth, getCheckOutPage);
     
     router.get('/admin/order',isAdmin, getAdminOrderPage);
     // router.listen(PORT, () => {

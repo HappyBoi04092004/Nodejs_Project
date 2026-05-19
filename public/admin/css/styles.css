@@ -11241,3 +11241,26 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+/* Blossom Flower admin theme */
+:root {
+  --bs-primary: #e91e8c;
+  --bs-primary-rgb: 233, 30, 140;
+}
+.bg-primary {
+  background-color: #e91e8c !important;
+}
+.btn-primary {
+  background-color: #e91e8c;
+  border-color: #e91e8c;
+}
+.btn-primary:hover {
+  background-color: #c2185b;
+  border-color: #c2185b;
+}
+.sb-sidenav-dark {
+  background-color: #4a148c;
+}
+.sb-sidenav-dark .sb-sidenav-menu .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+}

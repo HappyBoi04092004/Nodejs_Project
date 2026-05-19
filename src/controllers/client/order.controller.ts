@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getOrdersByUser, getOrderById, createOrderFromCart } from '../../services/client/order-service';
 
 export const getOrderHistoryPage = async (req: Request, res: Response) => {
-    const userId = req.user.id;
+    const userId = (req.user as { id: number }).id;
     const page = Number(req.query.page) || 1;
     const pageSize = 10;
     const { orders, total } = await getOrdersByUser(userId, page, pageSize);
@@ -21,7 +21,7 @@ export const getOrderDetailPage = async (req: Request, res: Response) => {
 };
 
 export const postCheckoutOrder = async (req: Request, res: Response) => {
-    const userId = req.user.id;
+    const userId = (req.user as { id: number }).id;
     const { receiverName, receiverAddress, receiverPhone } = req.body;
     try {
         await createOrderFromCart(userId, receiverName, receiverAddress, receiverPhone);

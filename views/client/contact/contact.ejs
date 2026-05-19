@@ -1,56 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
-    <meta charset="UTF-8" />
-    <title>Lịch sử mua hàng</title>
-    <link href="/client/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/client/css/style.css" rel="stylesheet" />
+    <%- include('../layout/head', { pageTitle: 'Liên hệ' }); -%>
   </head>
   <body>
     <%- include('../layout/header'); -%>
-    <div class="container py-5">
-      <h2 class="mb-4">Liên hệ với chúng tôi</h2>
-      <div class="row">
+    <%- include('../layout/search-modal'); -%>
+
+    <main class="container py-5" style="margin-top: 180px">
+      <h1 class="text-primary mb-4">Liên hệ Blossom Flower</h1>
+      <% if (sent) { %>
+      <div class="alert alert-success">Cảm ơn bạn! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</div>
+      <% } %>
+      <div class="row g-4">
         <div class="col-md-6">
-          <form>
+          <form method="post" action="/contact" class="card border-0 shadow-sm p-4">
             <div class="mb-3">
               <label for="name" class="form-label">Họ tên</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Nhập họ tên"
-              />
+              <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ tên" required />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Nhập email"
-              />
+              <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" required />
             </div>
             <div class="mb-3">
               <label for="message" class="form-label">Nội dung</label>
-              <textarea
-                class="form-control"
-                id="message"
-                rows="4"
-                placeholder="Nhập nội dung liên hệ..."
-              ></textarea>
+              <textarea class="form-control" id="message" name="message" rows="4" placeholder="Bạn cần hoa cho dịp gì?" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Gửi liên hệ</button>
           </form>
         </div>
         <div class="col-md-6">
-          <h5>Thông tin liên hệ</h5>
-          <p><i class="fas fa-map-marker-alt"></i> 123 Main St, Cityville</p>
-          <p><i class="fas fa-envelope"></i> contact@hplaptop.com</p>
-          <p><i class="fas fa-phone"></i> 0123 456 789</p>
+          <div class="card border-0 shadow-sm p-4 h-100">
+            <h5 class="text-primary">Thông tin cửa hàng</h5>
+            <p class="mb-2"><i class="fas fa-map-marker-alt text-primary me-2"></i>31 Nguyên Xá, Bắc Từ Liêm, Hà Nội</p>
+            <p class="mb-2"><i class="fas fa-envelope text-primary me-2"></i>contact@blossomflower.vn</p>
+            <p class="mb-2"><i class="fas fa-phone text-primary me-2"></i>0941 579 339</p>
+            <p class="mb-0 text-muted">Giờ mở cửa: 8:00 – 21:00 (tất cả các ngày)</p>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
+
     <%- include('../layout/footer'); -%>
+    <%- include('../layout/scripts'); -%>
   </body>
 </html>

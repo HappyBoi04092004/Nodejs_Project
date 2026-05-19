@@ -32,10 +32,11 @@ const getShopPage = async (req: Request, res: Response) => {
     if (factory) filter.factory = String(factory);
     if (target) filter.target = String(target);
     if (q) {
+        const keyword = String(q);
         filter.OR = [
-            { name: { contains: String(q), mode: 'insensitive' } },
-            { shortDesc: { contains: String(q), mode: 'insensitive' } },
-            { detailDesc: { contains: String(q), mode: 'insensitive' } }
+            { name: { contains: keyword } },
+            { shortDesc: { contains: keyword } },
+            { detailDesc: { contains: keyword } },
         ];
     }
     const total = await getProductCount(filter);

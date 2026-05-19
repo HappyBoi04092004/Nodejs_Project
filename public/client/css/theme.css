@@ -1,0 +1,68 @@
+:root {
+  --bs-primary: #e91e8c;
+  --bs-secondary: #fce4ec;
+  --bs-primary-rgb: 233, 30, 140;
+  --bs-secondary-rgb: 252, 228, 236;
+}
+
+body {
+  background-color: #fffafb;
+}
+
+.text-primary {
+  color: #e91e8c !important;
+}
+
+.bg-primary {
+  background-color: #e91e8c !important;
+}
+
+.btn-primary {
+  background-color: #e91e8c;
+  border-color: #e91e8c;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #c2185b;
+  border-color: #c2185b;
+}
+
+.btn-outline-primary {
+  color: #e91e8c;
+  border-color: #e91e8c;
+}
+
+.btn-outline-primary:hover {
+  background-color: #e91e8c;
+  border-color: #e91e8c;
+}
+
+.border-primary {
+  border-color: #e91e8c !important;
+}
+
+.topbar.bg-primary,
+.service-content.bg-primary {
+  background-color: #e91e8c !important;
+}
+
+.hero-header {
+  background: linear-gradient(135deg, #fff5f8 0%, #fce4ec 50%, #ffffff 100%);
+}
+
+.footer.bg-dark {
+  background: #4a148c !important;
+}
+
+.copyright.bg-dark {
+  background: #311b92 !important;
+}
+
+.spinner-grow.text-primary {
+  color: #e91e8c !important;
+}
+
+.product-thumb {
+  background: #fce4ec;
+}

@@ -1,183 +1,176 @@
 import { prisma } from "config/client";
 import { hashPassword } from "services/user-service";
 import { ACCOUNT_TYPE } from "config/constant";
-import { count } from "console";
 
-const initDatabase = async() => {
-    const countUsers = await prisma.user.count();
-    const countRoles = await prisma.role.count();
-    const countProducts = await prisma.product.count();
-    if(countRoles === 0){
-        await prisma.role.createMany({
+const FLOWER_PRODUCTS = [
+  {
+    name: "Bó hoa hồng đỏ 99 bông",
+    price: 890000,
+    detailDesc: "Bó hồng Ecuador nhập khẩu, bọc giấy cao cấp, kèm thiệp chúc mừng. Phù hợp tỏ tình, kỷ niệm.",
+    shortDesc: "99 bông – Gói quà sang trọng",
+    quantity: 50,
+    factory: "HOA-HONG",
+    target: "TINH-YEU",
+    image: "flower-rose-99.jpg",
+  },
+  {
+    name: "Giỏ hoa tulip pastel",
+    price: 650000,
+    detailDesc: "Tulip Hà Lan mix màu pastel, giỏ mây handmade, tươi 5–7 ngày.",
+    shortDesc: "Tulip mix – Giỏ mây",
+    quantity: 40,
+    factory: "TULIP",
+    target: "SINH-NHAT",
+    image: "flower-tulip.jpg",
+  },
+  {
+    name: "Bó hoa ly trắng tinh khôi",
+    price: 480000,
+    detailDesc: "Hoa ly trắng thơm nhẹ, phù hợp chia buồn hoặc chúc mừng thanh lịch.",
+    shortDesc: "Ly trắng – 15 cành",
+    quantity: 60,
+    factory: "HOA-LY",
+    target: "CHUC-MUNG",
+    image: "flower-lily.jpg",
+  },
+  {
+    name: "Hộp hoa sáp thơm",
+    price: 350000,
+    detailDesc: "Hoa sáp bền 2 năm, hộp kính sang trọng, không cần tưới.",
+    shortDesc: "Hộp quà lưu niệm",
+    quantity: 80,
+    factory: "HOA-SAP",
+    target: "QUA-TANG",
+    image: "flower-box.jpg",
+  },
+  {
+    name: "Bó hướng dương nắng vàng",
+    price: 320000,
+    detailDesc: "Hướng dương Đà Lạt tươi, mang năng lượng tích cực, khai trương.",
+    shortDesc: "Sắc vàng rực rỡ",
+    quantity: 70,
+    factory: "HOA-SAC",
+    target: "KHAI-TRUONG",
+    image: "flower-sunflower.jpg",
+  },
+  {
+    name: "Bó cẩm chướng mix",
+    price: 280000,
+    detailDesc: "Cẩm chướng nhiều màu, giá mềm, phù hợp tặng mẹ, 8/3, 20/10.",
+    shortDesc: "Mix màu dễ thương",
+    quantity: 100,
+    factory: "HOA-CAM",
+    target: "TANG-ME",
+    image: "flower-carnation.jpg",
+  },
+  {
+    name: "Hoa cưới cầm tay ivory",
+    price: 1200000,
+    detailDesc: "Thiết kế ivory – xanh lá, hoa lan, hồng garden, ribbon satin.",
+    shortDesc: "Bó cô dâu đặt may",
+    quantity: 20,
+    factory: "HOA-CUOI",
+    target: "DAM-CUOI",
+    image: "flower-wedding.jpg",
+  },
+  {
+    name: "Kệ hoa khai trương 2 tầng",
+    price: 2500000,
+    detailDesc: "Kệ hoa lớn khai trương, giao trong 2h nội thành, kèm banner.",
+    shortDesc: "Kệ 2 tầng – Doanh nghiệp",
+    quantity: 15,
+    factory: "KE-HOA",
+    target: "KHAI-TRUONG",
+    image: "flower-opening.jpg",
+  },
+  {
+    name: "Bình hoa văn phòng mini",
+    price: 220000,
+    detailDesc: "Hoa theo mùa trong bình thủy tinh, thay hoa 2 lần/tuần (gói thuê).",
+    shortDesc: "Trang trí bàn làm việc",
+    quantity: 90,
+    factory: "BINH-HOA",
+    target: "VAN-PHONG",
+    image: "flower-office.jpg",
+  },
+  {
+    name: "Bó hoa sinh nhật rainbow",
+    price: 420000,
+    detailDesc: "Mix hoa theo mùa rực rỡ, nơ satin, thiệp viết tay miễn phí.",
+    shortDesc: "Sinh nhật vui tươi",
+    quantity: 55,
+    factory: "HOA-MIX",
+    target: "SINH-NHAT",
+    image: "flower-birthday.jpg",
+  },
+];
+
+const initDatabase = async () => {
+  const countUsers = await prisma.user.count();
+  const countRoles = await prisma.role.count();
+  const countProducts = await prisma.product.count();
+
+  if (countRoles === 0) {
+    await prisma.role.createMany({
+      data: [{ name: "Admin" }, { name: "User" }],
+    });
+  }
+
+  if (countUsers === 0) {
+    const adminrole = await prisma.role.findFirst({ where: { name: "Admin" } });
+    if (adminrole) {
+      const johndoePassword = await hashPassword("johndoe");
+      const janesmithPassword = await hashPassword("janesmith");
+      const adminPassword = await hashPassword("admin");
+
+      await prisma.user.createMany({
         data: [
-            {
-                name: "Admin",            },
-            {
-                name: "User",
-            },
+          {
+            fullName: "John Doe",
+            username: "johndoe@example.com",
+            address: "123 Main St, Cityville",
+            password: johndoePassword,
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            roleId: adminrole.id,
+          },
+          {
+            fullName: "Jane Smith",
+            username: "janesmith@example.com",
+            address: "456 Oak Ave, Townsville",
+            password: janesmithPassword,
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            roleId: adminrole.id,
+          },
+          {
+            fullName: "Admin Blossom",
+            username: "admin@example.com",
+            address: "31 Nguyên Xá, Hà Nội",
+            password: adminPassword,
+            accountType: ACCOUNT_TYPE.SYSTEM,
+            roleId: adminrole.id,
+          },
         ],
-})
+      });
     }
-    if(countUsers === 0){
-        const defaultPassword = await hashPassword("123456");
-        const adminrole = await prisma.role.findFirst({
-            where: { name: "Admin" }
-        });
-        if (adminrole) {
-            const johndoePassword = await hashPassword("johndoe");
-            const janesmithPassword = await hashPassword("janesmith");
-            const adminPassword = await hashPassword("admin");
-            
-            await prisma.user.createMany({
-        data: [
-            {
-                fullName: "John Doe",
-                username: "johndoe@example.com",
-                address: "123 Main St, Cityville",
-                password: johndoePassword,
-                accountType: ACCOUNT_TYPE.SYSTEM,
-                roleId : adminrole.id
-            },
-            {
-                fullName: "Jane Smith",
-                username: "janesmith@example.com",
-                address: "456 Oak Ave, Townsville",
-                password: janesmithPassword,
-                accountType: ACCOUNT_TYPE.SYSTEM,
-                roleId : adminrole.id
-            },
-            {
-                fullName: "Admin",
-                username: "admin@example.com",
-                address: "456 Main St, Cityville",
-                password: adminPassword,
-                accountType: ACCOUNT_TYPE.SYSTEM,
-                roleId : adminrole.id
-            },
-        ],
-})
-        }
+  }
 
-       
+  const laptopCount = await prisma.product.count({
+    where: { name: { contains: "Laptop" } },
+  });
+
+  if (countProducts === 0 || laptopCount > 0) {
+    if (laptopCount > 0) {
+      await prisma.cartDetail.deleteMany({});
+      await prisma.orderDetail.deleteMany({});
+      await prisma.product.deleteMany({});
     }
+    await prisma.product.createMany({ data: FLOWER_PRODUCTS });
+    console.log("Da cap nhat du lieu san pham hoa tuoi");
+  }
 
-    if (countProducts === 0) {
-        const products = [
-            {
-                name: "Laptop Asus TUF Gaming",
-                price: 17490000,
-                detailDesc: "ASUS TUF Gaming F15 FX506HF HN017W là chiếc laptop gaming giá rẻ nhưng vô cùng mạnh mẽ. Không chỉ bộ vi xử lý Intel thế hệ thứ 11, card đồ họa RTX 20 series mà điểm mạnh còn đến từ việc trang bị sẵn 16GB RAM, cho bạn hiệu năng xuất sắc mà không cần nâng cấp máy.",
-                shortDesc: " Intel, Core i5, 11400H",
-                quantity: 100,
-                factory: "ASUS",
-                target: "GAMING",
-                image: "1711078092373-asus-01.png"
-            },
-            {
-                name: "Laptop Dell Inspiron 15",
-                price: 15490000,
-                detailDesc: "Khám phá sức mạnh tối ưu từ Dell Inspiron 15 N3520, chiếc laptop có cấu hình cực mạnh với bộ vi xử lý Intel Core i5 1235U thế hệ mới và dung lượng RAM lên tới 16GB. Bạn có thể thoải mái xử lý nhiều tác vụ, nâng cao năng suất trong công việc mà không gặp bất kỳ trở ngại nào.",
-                shortDesc: "i5 1235U/16GB/512GB/15.6\"FHD",
-                quantity: 200,
-                factory: "DELL",
-                target: "SINHVIEN-VANPHONG",
-                image: "1711078452562-dell-01.png"
-            },
-            {
-                name: "Lenovo IdeaPad Gaming 3",
-                price: 19500000,
-                detailDesc: "Mới đây, Lenovo đã tung ra thị trường một sản phẩm gaming thế hệ mới với hiệu năng mạnh mẽ, thiết kế tối giản, lịch lãm phù hợp cho những game thủ thích sự đơn giản. Tản nhiệt mát mẻ với hệ thống quạt kép kiểm soát được nhiệt độ máy luôn mát mẻ khi chơi game.",
-                shortDesc: " i5-10300H, RAM 8G",
-                quantity: 150,
-                factory: "LENOVO",
-                target: "GAMING",
-                image: "1711079073759-lenovo-01.png"
-            },
-            {
-                name: "Asus K501UX",
-                price: 11900000,
-                detailDesc: "Tận hưởng cảm giác mát lạnh sành điệu với thiết kế kim loại. Được thiết kế để đáp ứng những nhu cầu điện toán hàng ngày của bạn, dòng máy tính xách tay ASUS K Series sở hữu thiết kế tối giản, gọn nhẹ và cực mỏng với một lớp vỏ họa tiết vân kim loại phong cách.",
-                shortDesc: "VGA NVIDIA GTX 950M- 4G",
-                quantity: 99,
-                factory: "ASUS",
-                target: "THIET-KE-DO-HOA",
-                image: "1711079496409-asus-02.png"
-            },
-            {
-                name: "MacBook Air 13",
-                price: 17690000,
-                detailDesc: "Chiếc MacBook Air có hiệu năng đột phá nhất từ trước đến nay đã xuất hiện. Bộ vi xử lý Apple M1 hoàn toàn mới đưa sức mạnh của MacBook Air M1 13 inch 2020 vượt xa khỏi mong đợi người dùng, có thể chạy được những tác vụ nặng và thời lượng pin đáng kinh ngạc.",
-                shortDesc: "Apple M1 GPU 7 nhân",
-                quantity: 99,
-                factory: "APPLE",
-                target: "GAMING",
-                image: "1711079954090-apple-01.png"
-            },
-            {
-                name: "Laptop LG Gram Style",
-                price: 31490000,
-                detailDesc: "14.0 Chính: inch, 2880 x 1800 Pixels, OLED, 90 Hz, OLED",
-                shortDesc: "Intel Iris Plus Graphics",
-                quantity: 99,
-                factory: "LG",
-                target: "DOANH-NHAN",
-                image: "1711080386941-lg-01.png"
-            },
-            {
-                name: "MacBook Air 13",
-                price: 24990000,
-                detailDesc: "Không chỉ khơi gợi cảm hứng qua việc cách tân thiết kế, MacBook Air M2 2022 còn chứa đựng nguồn sức mạnh lớn lao với chip M2 siêu mạnh, thời lượng pin chạm  ngưỡng 18 giờ, màn hình Liquid Retina tuyệt đẹp và hệ thống camera kết hợp cùng âm thanh tân tiến.",
-                shortDesc: "Apple M2 GPU 8 nhân",
-                quantity: 99,
-                factory: "APPLE",
-                target: "MONG-NHE",
-                image: "1711080787179-apple-02.png"
-            },
-            {
-                name: "Laptop Acer Nitro",
-                price: 23490000,
-                detailDesc: "Là chiếc laptop gaming thế hệ mới nhất thuộc dòng Nitro 5 luôn chiếm được rất nhiều cảm tình của game thủ trước đây, Acer Nitro Gaming AN515-58-769J nay còn ấn tượng hơn nữa với bộ vi xử lý Intel Core i7 12700H cực khủng và card đồ họa RTX 3050, sẵn sàng cùng bạn chinh phục những đỉnh cao.",
-                shortDesc: "AN515-58-769J i7 12700H",
-                quantity: 99,
-                factory: "ACER",
-                target: "SINHVIEN-VANPHONG",
-                image: "1711080948771-acer-01.png"
-            },
-            {
-                name: "Laptop Acer Nitro V",
-                price: 26999000,
-                detailDesc: "15.6 inch, FHD (1920 x 1080), IPS, 144 Hz, 250 nits, Acer ComfyView LED-backlit",
-                shortDesc: "NVIDIA GeForce RTX 4050",
-                quantity: 99,
-                factory: "ASUS",
-                target: "MONG-NHE",
-                image: "1711081080930-asus-03.png"
-            },
-            {
-                name: "Laptop Dell Latitude 3420",
-                price: 21399000,
-                detailDesc: "Dell Inspiron N3520 là chiếc laptop lý tưởng cho công việc hàng ngày. Bộ vi xử lý Intel Core i5 thế hệ thứ 12 hiệu suất cao, màn hình lớn 15,6 inch Full HD 120Hz mượt mà, thiết kế bền bỉ sẽ giúp bạn giải quyết công việc nhanh chóng mọi lúc mọi nơi.",
-                shortDesc: "Intel Iris Xe Graphics",
-                quantity: 99,
-                factory: "DELL",
-                target: "MONG-NHE",
-                image: "1711081278418-dell-02.png"
-            }
-        ];
-
-        await prisma.product.createMany({
-            data: products
-        })
-    }
-
-
-
-
-    if(countRoles !==0 && countUsers!==0){
-        console.log("Database da duoc khoi tao, khong can khoi tao lai");
-    }
-
-    
+  if (countRoles !== 0 && countUsers !== 0) {
+    console.log("Database da duoc khoi tao");
+  }
 };
 
 export default initDatabase;

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <%- include('../layout/head'); -%>
+  </head>
+  <body>
+    <%- include('../layout/header'); -%>
+    <%- include('../layout/search-modal'); -%>
+    <main class="container py-5" style="margin-top: 180px">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+          <li class="breadcrumb-item active"><%= title %></li>
+        </ol>
+      </nav>
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+          <h1 class="text-primary mb-4"><%= title %></h1>
+          <p class="lead text-muted mb-0"><%= content %></p>
+        </div>
+      </div>
+    </main>
+    <%- include('../layout/footer'); -%>
+    <%- include('../layout/scripts'); -%>
+  </body>
+</html>
